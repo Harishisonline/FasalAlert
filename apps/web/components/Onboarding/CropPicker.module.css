@@ -1,0 +1,6 @@
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); }
+.tile { position: relative; display: grid; justify-items: start; align-content: start; gap: var(--sp-1); min-height: 120px; padding: var(--sp-3); border-radius: var(--r-md); border: var(--bw-control) solid var(--color-border-strong); background: var(--color-bg-surface); text-align: start; color: var(--color-text-primary); }
+.tile[aria-checked='true'] { border: var(--bw-strong) solid var(--color-action-primary); background: var(--color-bg-brand-tint); }
+.check { position: absolute; top: var(--sp-2); right: var(--sp-2); width: 24px; height: 24px; border-radius: 50%; background: var(--color-action-primary); color: var(--color-text-on-action); display: inline-flex; align-items: center; justify-content: center; }
+.name { font-weight: 600; font-size: var(--fs-body); }
+.hint { font-size: var(--fs-small); color: var(--color-text-muted); }

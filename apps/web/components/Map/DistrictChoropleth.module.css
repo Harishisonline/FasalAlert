@@ -1,0 +1,14 @@
+.wrap { position: relative; width: 100%; height: 100%; min-height: 320px; background: var(--color-bg-canvas); }
+/* maplibre-gl.css sets .maplibregl-map to position: relative, so size it explicitly. */
+.map { position: absolute !important; inset: 0; width: 100%; height: 100%; }
+.map[data-hidden] { visibility: hidden; }
+.overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: var(--sp-4); }
+.overlayMessage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: var(--sp-5); text-align: center; color: var(--color-text-secondary); background: var(--color-bg-sunken); }
+.controls { position: absolute; right: var(--sp-4); bottom: var(--sp-4); z-index: var(--z-map-controls); display: grid; border-radius: var(--r-md); overflow: hidden; box-shadow: var(--shadow-2); background: var(--color-bg-raised); border: var(--bw-hairline) solid var(--color-border-subtle); }
+.control { width: var(--tap-min); height: var(--tap-min); border: none; background: none; color: var(--color-text-primary); display: inline-flex; align-items: center; justify-content: center; }
+.control + .control { border-top: var(--bw-hairline) solid var(--color-border-subtle); }
+.note { position: absolute; left: var(--sp-3); right: var(--sp-3); bottom: var(--sp-3); padding: var(--sp-2) var(--sp-3); border-radius: var(--r-sm); background: var(--color-bg-raised); font-size: var(--fs-small); color: var(--color-text-secondary); }
+.marker { display: flex; flex-direction: column; align-items: center; gap: 2px; pointer-events: none; }
+.pill { padding: 2px var(--sp-2); border-radius: var(--r-full); background: var(--color-bg-raised); border: var(--bw-hairline) solid var(--color-border-subtle); font-size: var(--fs-small); font-weight: 600; color: var(--color-text-primary); white-space: nowrap; box-shadow: var(--shadow-1); line-height: 1.6; }
+.pill[data-selected='true'] { border: var(--bw-strong) solid var(--color-text-primary); }
+.siren { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--risk-critical); color: var(--color-text-on-solid); box-shadow: 0 0 0 2px var(--color-bg-surface); }

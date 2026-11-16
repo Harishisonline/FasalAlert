@@ -1,0 +1,231 @@
+/* apps/web/styles/tokens.css
+   design.md 8.12. PRD §14.1 values are unchanged. Lines marked "added" extend them.
+   Font sizes are expressed in rem (px / 16) so the browser font-size setting is respected (design.md 13.4). */
+:root {
+  color-scheme: light;
+
+  /* Brand primitives (PRD) */
+  --leaf-700: #0b5c2e;
+  --leaf-600: #0f7a3e;
+  --leaf-100: #e3f5ea;
+  --soil-700: #4a2f1a;
+  --amber-600: #c97f04;
+  --amber-100: #fff3d6;
+  --frost-600: #1e5aa8;
+  --frost-100: #e1ecf9;
+  --alert-700: #a31515;
+  --alert-600: #d11a1a;
+  --alert-100: #fde2e2;
+  /* added */
+  --leaf-800: #084a25;
+  --leaf-900: #063a1d;
+  --soil-100: #f4ede6;
+  --amber-700: #8a5a00;
+  --critical-100: #f6dede;
+
+  /* Risk fills (PRD): theme invariant */
+  --risk-none: #14964c;
+  --risk-low: #1e5aa8;
+  --risk-medium: #f4a300;
+  --risk-high: #d11a1a;
+  --risk-critical: #7a0c0c;
+  --risk-nodata: #c9cdd3; /* added */
+
+  /* Neutrals (PRD) */
+  --ink-900: #16181c;
+  --ink-700: #33383f;
+  --ink-500: #6b7280;
+  --ink-300: #b9bec7;
+  --line: #e3e5e9;
+  --surface: #ffffff;
+  --canvas: #f7f8f6;
+  /* added */
+  --ink-400: #7c828c;
+  --sunken: #eef0ec;
+
+  /* Semantic: surfaces and text */
+  --color-bg-canvas: var(--canvas);
+  --color-bg-surface: var(--surface);
+  --color-bg-raised: var(--surface);
+  --color-bg-sunken: var(--sunken);
+  --color-bg-brand-tint: var(--leaf-100);
+  --color-bg-inverse: var(--ink-900);
+  --color-text-inverse: #ffffff;
+  --color-text-primary: var(--ink-900);
+  --color-text-secondary: var(--ink-700);
+  --color-text-muted: var(--ink-500);
+  --color-text-warm: var(--soil-700);
+  --color-text-brand: var(--leaf-700);
+  --color-text-on-action: #ffffff;
+  --color-text-on-solid: #ffffff; /* added: text on solid high and critical fills */
+  --color-bg-warm-tint: var(--soil-100); /* added: stage chip */
+  --color-logo-fill: var(--leaf-700); /* added */
+  --color-border-subtle: var(--line);
+  --color-border-strong: var(--ink-400);
+  --color-focus-ring: var(--leaf-600);
+  --color-action-primary: var(--leaf-700);
+  --color-action-primary-hover: var(--leaf-800);
+  --color-action-primary-pressed: var(--leaf-900);
+
+  /* Semantic: status */
+  --color-success-ink: var(--leaf-700);
+  --color-warning-ink: var(--amber-700);
+  --color-warning-fill: var(--amber-600);
+  --color-warning-tint: var(--amber-100);
+  --color-danger-ink: var(--alert-700);
+  --color-danger-fill: var(--alert-600);
+  --color-danger-tint: var(--alert-100);
+  --color-info-ink: var(--frost-600);
+  --color-info-tint: var(--frost-100);
+  --color-abstain-ink: var(--amber-700);
+  --color-abstain-border: var(--amber-600);
+  --color-abstain-tint: var(--amber-100);
+  --color-stale-ink: var(--ink-700);
+  --color-stale-border: var(--ink-400);
+  --color-stale-tint: var(--sunken);
+  --color-synthetic-ink: var(--ink-700);
+  --color-synthetic-tint: var(--sunken);
+
+  /* Risk ink and tint (theme dependent) */
+  --risk-none-ink: #0b5c2e;      --risk-none-tint: #e3f5ea;
+  --risk-low-ink: #1e5aa8;       --risk-low-tint: #e1ecf9;
+  --risk-medium-ink: #8a5a00;    --risk-medium-tint: #fff3d6;
+  --risk-high-ink: #a31515;      --risk-high-tint: #fde2e2;
+  --risk-critical-ink: #7a0c0c;  --risk-critical-tint: #f6dede;
+  --risk-nodata-ink: #33383f;    --risk-nodata-tint: #eef0ec;
+  /* Critical outer ring: 2px --risk-critical in light, 2px --risk-solid-outline in dark (design.md 6.6, 14.2) */
+  --risk-solid-outline: transparent;
+  --risk-critical-ring: var(--risk-critical);
+
+  /* Map pattern strokes (design.md 16.4) */
+  --pattern-light-stroke: rgb(255 255 255 / 0.55);
+  --pattern-critical-stroke: rgb(255 255 255 / 0.6);
+  --pattern-dark-stroke: rgb(22 24 28 / 0.3);
+  --pattern-nodata-stroke: rgb(51 56 63 / 0.3);
+
+  /* Data colours */
+  --wx-observed: #16181c;  --wx-forecast: #33383f;  --wx-band: #d5dfe9;
+  --wx-now: #0f7a3e;       --wx-rain: #2b7bb9;      --wx-tmax: #b4540a;
+  --wx-tmin: #2f5d8a;      --color-threshold: #a31515;
+  --mk-price: #16181c;     --mk-p50: #0b5c2e;       --mk-band: #cfe9d8;
+  --mk-hist-range: #e3e5e9; --mk-arrivals: #b9bec7; --mk-arrivals-today: #6b7280;
+
+  /* Type (PRD, plus added steps). --font-inter and --font-noto-deva are injected by next/font
+     (app/fonts.ts) for the PRD's Inter and Noto Sans Devanagari (design.md 7.2). */
+  --font-sans: var(--font-inter), var(--font-noto-deva), system-ui, sans-serif;
+  --fs-numeric-xl: 2.5rem; /* 40px, added */
+  --fs-display: 1.875rem;  /* 30px */
+  --fs-title: 1.375rem;    /* 22px */
+  --fs-lead: 1.25rem;      /* 20px, added */
+  --fs-heading: 1.125rem;  /* 18px, added */
+  --fs-body: 1rem;         /* 16px */
+  --fs-small: 0.875rem;    /* 14px */
+  --fs-otp: 1.5rem;        /* 24px, added: OTP digits */
+  --lh-latin: 1.55;
+  --lh-deva: 1.7;
+  --lh-heading-latin: 1.3;  /* added */
+  --lh-heading-deva: 1.7;   /* added: PRD §14.2, headings included */
+
+  /* Space and radius (PRD, plus added) */
+  --sp-0: 0; --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --r-xs: 4px; --r-sm: 8px; --r-md: 12px; --r-lg: 18px; --r-full: 999px;
+
+  /* Borders, elevation, layers */
+  --bw-hairline: 1px; --bw-control: 1.5px; --bw-strong: 2px;
+  --bw-risk: 4px; --bw-risk-pinned: 8px;
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgb(22 24 28 / 0.06);
+  --shadow-2: 0 4px 12px rgb(22 24 28 / 0.10), 0 1px 3px rgb(22 24 28 / 0.08);
+  --shadow-3: 0 12px 32px rgb(22 24 28 / 0.16);
+  --scrim: rgb(22 24 28 / 0.40);
+  --z-base: 0; --z-map-controls: 10; --z-sticky: 100; --z-fab: 200; --z-popover: 300;
+  --z-sheet: 400; --z-modal: 500; --z-toast: 600; --z-skiplink: 700;
+
+  /* Sizes */
+  --container-max: 1200px; --container-reading: 680px; --container-narrow: 440px;
+  --sidebar-w: 248px; --panel-w: 400px;
+  --icon-sm: 16px; --icon-md: 20px; --icon-lg: 24px; --icon-xl: 32px;
+  --icon-2xl: 40px; --icon-3xl: 48px;
+  --tap-min: 48px; --tap-comfort: 56px; --tap-fab: 56px; --tap-mic: 72px; --tap-gap: 8px;
+  --header-h: 56px; --tabbar-h: 64px; /* added */
+
+  /* Motion */
+  --dur-instant: 100ms; --dur-fast: 150ms; --dur-base: 200ms; --dur-slow: 300ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+
+  /* Charts. --chart-h-sm is for compact charts; ArrivalSparkline is 64px, 96px from 480px. */
+  --chart-stroke: 2px; --chart-h-sm: 160px; --chart-h-md: 200px; --chart-h-lg: 240px;
+  --chart-dash-forecast: 6 4; --chart-dash-threshold: 4 3; --chart-dot: 6px;
+  --chart-grid: var(--color-border-subtle); --chart-label: var(--fs-small);
+  --sparkline-h: 64px;
+}
+
+@media (min-width: 480px) {
+  :root { --sparkline-h: 96px; }
+}
+@media (min-width: 1024px) {
+  :root { --header-h: 64px; }
+}
+
+/* Dark: opt-in from R9a only. Light is the default and there is no "system" mode (PRD §19.2 rule 6). */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg-canvas: #0f1311;
+  --color-bg-surface: #171c19;
+  --color-bg-raised: #1f2522;
+  --color-bg-sunken: #0b0e0d;
+  --color-bg-brand-tint: #10301f;
+  --color-bg-inverse: #eef1ee;
+  --color-text-inverse: #16181c;
+  --color-text-primary: #eef1ee;
+  --color-text-secondary: #c3cac5;
+  --color-text-muted: #9aa29d;
+  --color-text-warm: #d9c2ab;
+  --color-text-brand: #4cc27f;
+  --color-text-on-action: #0f1311;
+  --color-bg-warm-tint: #2a221b;
+  --color-border-subtle: #2c3430;
+  --color-border-strong: #6b746f;
+  --color-focus-ring: #4cc27f;
+  --color-action-primary: #4cc27f;
+  --color-action-primary-hover: #6fd396;
+  --color-action-primary-pressed: #8fe0ad;
+  --color-success-ink: #3fbf73;
+  --color-warning-ink: #f4a300;  --color-warning-tint: #33260a;
+  --color-danger-ink: #ff6b6b;   --color-danger-tint: #3a1212;
+  --color-info-ink: #7cb0f0;     --color-info-tint: #0f2340;
+  --color-abstain-ink: #f4a300;  --color-abstain-tint: #33260a;
+  --color-stale-ink: #c3cac5;    --color-stale-border: #6b746f; --color-stale-tint: #1f2522;
+  --color-synthetic-ink: #c3cac5; --color-synthetic-tint: #1f2522;
+  --risk-none-ink: #3fbf73;      --risk-none-tint: #10301f;
+  --risk-low-ink: #7cb0f0;       --risk-low-tint: #0f2340;
+  --risk-medium-ink: #f4a300;    --risk-medium-tint: #33260a;
+  --risk-high-ink: #ff6b6b;      --risk-high-tint: #3a1212;
+  --risk-critical-ink: #ff9e9e;  --risk-critical-tint: #4a0d0d;
+  --risk-nodata-ink: #c3cac5;    --risk-nodata-tint: #1f2522;
+  --risk-solid-outline: #ff9e9e;
+  --risk-critical-ring: var(--risk-solid-outline);
+  --pattern-nodata-stroke: rgb(195 202 197 / 0.3);
+  --wx-observed: #eef1ee; --wx-forecast: #c3cac5; --wx-band: #2a3644;
+  --wx-now: #4cc27f; --wx-rain: #5fa8d3; --wx-tmax: #e08a4a; --wx-tmin: #8fb3d9;
+  --color-threshold: #ff8080;
+  --mk-price: #eef1ee; --mk-p50: #4cc27f; --mk-band: #1d3b2a;
+  --mk-hist-range: #2c3430; --mk-arrivals: #4a524d; --mk-arrivals-today: #9aa29d;
+  --shadow-1: none; --shadow-2: none; --shadow-3: none;
+  --scrim: rgb(0 0 0 / 0.60);
+}
+
+html { background: var(--color-bg-canvas); }
+body {
+  margin: 0;
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-latin);
+  -webkit-text-size-adjust: 100%;
+}
+:lang(mr), :lang(hi) { line-height: var(--lh-deva); }

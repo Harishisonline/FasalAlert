@@ -1,0 +1,15 @@
+.banner {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md); border: var(--bw-hairline) solid transparent; font-size: var(--fs-body);
+}
+.icon { flex: none; }
+.text { flex: 1 1 14rem; min-width: 0; }
+.action { flex: none; }
+.banner[data-variant='danger'] { background: var(--color-danger-tint); border-color: var(--color-danger-fill); color: var(--color-text-primary); }
+.banner[data-variant='danger'] .icon { color: var(--color-danger-ink); }
+.banner[data-variant='warning'] { background: var(--color-warning-tint); border-color: var(--color-warning-fill); }
+.banner[data-variant='warning'] .icon { color: var(--color-warning-ink); }
+.banner[data-variant='info'] { background: var(--color-info-tint); }
+.banner[data-variant='info'] .icon { color: var(--color-info-ink); }
+.banner[data-variant='success'] { background: var(--color-bg-brand-tint); }
+.banner[data-variant='success'] .icon { color: var(--color-success-ink); }

@@ -1,0 +1,4 @@
+.selectors { display: grid; gap: var(--sp-3); grid-template-columns: minmax(0, 1fr); }
+.selectors[aria-busy] { opacity: 0.7; }
+@media (min-width: 1024px) { .selectors { grid-template-columns: 1fr minmax(240px, 360px); align-items: end; } }
+.mandi { min-width: 0; }

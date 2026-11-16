@@ -1,0 +1,262 @@
+{
+  "version": "2026.11",
+  "crops": {
+    "mango": {
+      "names": {"en": "Mango", "mr": "आंबा", "hi": "आम"},
+      "type": "perennial",
+      "agmarknet_commodity": "Mango",
+      "varieties": [
+        {"key": "alphonso", "name": {"en": "Alphonso", "mr": "हापूस", "hi": "अल्फांसो"}},
+        {"key": "kesar", "name": {"en": "Kesar", "mr": "केशर", "hi": "केसर"}},
+        {"key": "ratna", "name": {"en": "Ratna", "mr": "रत्ना", "hi": "रत्ना"}},
+        {"key": "totapuri", "name": {"en": "Totapuri", "mr": "तोतापुरी", "hi": "तोतापुरी"}}
+      ],
+      "season_start_event": "bahar",
+      "season_start_label": {"en": "Flowering start date", "mr": "मोहोर येण्यास सुरुवात झालेली तारीख", "hi": "बौर आने की शुरुआत की तारीख"},
+      "season_start_hint": {
+        "en": "Enter the date your trees started flowering (first panicles visible). In Konkan this is usually late November to mid-January. Stages are counted in days from this date; timings are for Alphonso in Konkan.",
+        "mr": "झाडांना मोहोर येण्यास सुरुवात झालेली तारीख टाका (पहिला मोहोर दिसलेला दिवस). कोकणात हे साधारणपणे नोव्हेंबरच्या शेवटी ते जानेवारीच्या मध्यापर्यंत असते. अवस्था या तारखेपासूनच्या दिवसांत मोजल्या जातात; वेळापत्रक कोकणातील हापूससाठी आहे.",
+        "hi": "जिस दिन पेड़ों पर बौर (मंजरी) आना शुरू हुआ, वह तारीख डालें। कोंकण में यह आमतौर पर नवंबर के अंत से जनवरी के मध्य तक होता है। अवस्थाएँ इसी तारीख से दिनों में गिनी जाती हैं; समय-सारिणी कोंकण के अल्फांसो (हापुस) के लिए है।"
+      },
+      "sowing_defaults": {"month_day": "12-09", "window": "11-18 to 01-18", "source_id": "S10"},
+      "phenology": {
+        "method": "calendar_days",
+        "base_temp_c": null,
+        "upper_temp_c": null,
+        "stages": [
+          {"key": "flowering", "label": {"en": "Flowering", "mr": "मोहोर", "hi": "बौर आना"}, "start": 0, "end": 41, "source_id": "S10"},
+          {"key": "fruit_development", "label": {"en": "Fruit set and development", "mr": "फळधारणा व फळवाढ", "hi": "फल लगना और विकास"}, "start": 41, "end": 128, "source_id": "S10"},
+          {"key": "harvest", "label": {"en": "Harvest (picking)", "mr": "तोडणी", "hi": "तुड़ाई"}, "start": 128, "end": null, "source_id": "S10"}
+        ],
+        "uncertainty_days": null
+      },
+      "thresholds": {
+        "flowering": {"frost_c": 4.4, "heat_c": null, "min_frost_override_c": 4.4, "max_heat_override_c": null, "source_id": "S1", "note": "CRFG table: mango 'flowers, fruit die at 40' (deg F) = 4.4 deg C. Chilling injury, not ice formation. Ball-park figure, not an ICAR value; PRD example rounds it to 4 deg C. Override floor = documented kill temperature. FAO (S2, ch.4 intro) says tropical-origin crops can suffer chilling injury below about +12.5 deg C (generic, not mango-specific). Heat threshold not sourced."},
+        "fruit_development": {"frost_c": 4.4, "heat_c": null, "min_frost_override_c": -1.4, "max_heat_override_c": null, "source_id": "S1", "note": "Default 4.4 deg C from CRFG 'flowers and small fruit killed at 40' (deg F). Override floor -1.4 deg C is the highest freezing temperature of mango fruit, FAO S2 Table 4.4 (after Whiteman 1957, measured on stored fruit); below it fruit tissue freezes. Heat threshold not sourced."},
+        "harvest": {"frost_c": -1.4, "heat_c": null, "min_frost_override_c": -1.4, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.4: highest freezing temperature of mango fruit -1.4 deg C (storage study). Mature Alphonso hangs April-May, when frost is not a realistic risk. Heat threshold not sourced."}
+      },
+      "spoilage_factor": {"value": null, "source_id": null},
+      "verified": false
+    },
+    "pomegranate": {
+      "names": {"en": "Pomegranate", "mr": "डाळिंब", "hi": "अनार"},
+      "type": "perennial",
+      "agmarknet_commodity": "Pomegranate",
+      "varieties": [
+        {"key": "bhagwa", "name": {"en": "Bhagwa", "mr": "भगवा", "hi": "भगवा"}},
+        {"key": "ganesh", "name": {"en": "Ganesh", "mr": "गणेश", "hi": "गणेश"}},
+        {"key": "arakta", "name": {"en": "Arakta", "mr": "आरक्ता", "hi": "आरक्ता"}},
+        {"key": "mridula", "name": {"en": "Mridula", "mr": "मृदुला", "hi": "मृदुला"}},
+        {"key": "ruby", "name": {"en": "Ruby", "mr": "रुबी", "hi": "रूबी"}}
+      ],
+      "season_start_event": "bahar",
+      "season_start_label": {"en": "Bahar treatment date", "mr": "बहार धरल्याची तारीख", "hi": "बहार उपचार की तारीख"},
+      "season_start_hint": {
+        "en": "Enter your bahar treatment date (the day you defoliated or pruned and restarted irrigation) for Ambia, Mrig or Hasta bahar. Stage timings are for Bhagwa in Mrig bahar (treatment in late May).",
+        "mr": "आंबिया, मृग किंवा हस्त बहार धरल्याची तारीख टाका (पानगळ किंवा छाटणी करून पुन्हा पाणी सुरू केलेला दिवस). अवस्थांचे वेळापत्रक मृग बहारातील (मे अखेरीस बहार धरलेल्या) भगवा जातीसाठी आहे.",
+        "hi": "आंबिया, मृग या हस्त बहार के लिए बहार उपचार की तारीख डालें (जिस दिन पत्ते गिराकर या छंटाई करके फिर से सिंचाई शुरू की)। अवस्थाओं का समय मृग बहार (मई के अंत में उपचार) में भगवा किस्म के लिए है।"
+      },
+      "sowing_defaults": {"month_day": "05-25", "window": "05-15 to 05-31", "source_id": "S9"},
+      "phenology": {
+        "method": "calendar_days",
+        "base_temp_c": null,
+        "upper_temp_c": null,
+        "stages": [
+          {"key": "flowering_fruit_set", "label": {"en": "New flush, flowering and fruit set", "mr": "फुलोरा व फळधारणा", "hi": "फूल आना और फल लगना"}, "start": 0, "end": 75, "source_id": "S8"},
+          {"key": "fruit_development", "label": {"en": "Fruit development", "mr": "फळवाढ", "hi": "फल विकास"}, "start": 75, "end": 255, "source_id": "S9"},
+          {"key": "harvest", "label": {"en": "Harvest (picking)", "mr": "तोडणी", "hi": "तुड़ाई"}, "start": 255, "end": null, "source_id": "S8"}
+        ],
+        "uncertainty_days": null
+      },
+      "thresholds": {
+        "flowering_fruit_set": {"frost_c": null, "heat_c": null, "min_frost_override_c": null, "max_heat_override_c": null, "source_id": null, "note": "No flower-stage cold or heat damage temperature found in a source that could be read. CRFG (S1) gives 12 deg F (-11.1 deg C) for older dormant plants only; not applicable to flowers."},
+        "fruit_development": {"frost_c": -3.0, "heat_c": null, "min_frost_override_c": -3.0, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.4: highest freezing temperature of pomegranate fruit -3.0 deg C (after Whiteman 1957, storage study). Freezing point only; chilling or sunscald thresholds not sourced."},
+        "harvest": {"frost_c": -3.0, "heat_c": null, "min_frost_override_c": -3.0, "max_heat_override_c": null, "source_id": "S2", "note": "Same FAO S2 Table 4.4 fruit freezing point. Heat threshold not sourced."}
+      },
+      "spoilage_factor": {"value": null, "source_id": null},
+      "verified": false
+    },
+    "grape": {
+      "names": {"en": "Grape", "mr": "द्राक्ष", "hi": "अंगूर"},
+      "type": "perennial",
+      "agmarknet_commodity": "Grapes",
+      "varieties": [
+        {"key": "thompson_seedless", "name": {"en": "Thompson Seedless", "mr": "थॉमसन सीडलेस", "hi": "थॉम्पसन सीडलेस"}},
+        {"key": "tas_a_ganesh", "name": {"en": "Tas-A-Ganesh", "mr": "तास-ए-गणेश", "hi": "तास-ए-गणेश"}},
+        {"key": "sonaka", "name": {"en": "Sonaka", "mr": "सोनाका", "hi": "सोनाका"}},
+        {"key": "manik_chaman", "name": {"en": "Manik Chaman", "mr": "माणिक चमन", "hi": "माणिक चमन"}},
+        {"key": "sharad_seedless", "name": {"en": "Sharad Seedless", "mr": "शरद सीडलेस", "hi": "शरद सीडलेस"}},
+        {"key": "crimson_seedless", "name": {"en": "Crimson Seedless", "mr": "क्रिमसन सीडलेस", "hi": "क्रिमसन सीडलेस"}}
+      ],
+      "season_start_event": "pruning",
+      "season_start_label": {"en": "Fruit pruning date", "mr": "फळछाटणीची तारीख", "hi": "फल छंटाई की तारीख"},
+      "season_start_hint": {
+        "en": "For grape, use your fruit pruning date (October), not the April foundation pruning. Stages are counted in days after fruit pruning; timings are for Thompson Seedless.",
+        "mr": "द्राक्षासाठी ऑक्टोबरमधील फळछाटणीची तारीख टाका, एप्रिलमधील खरड छाटणीची नाही. अवस्था फळछाटणीनंतरच्या दिवसांत मोजल्या जातात; वेळापत्रक थॉमसन सीडलेससाठी आहे.",
+        "hi": "अंगूर के लिए अक्टूबर की फल छंटाई की तारीख डालें, अप्रैल की आधार छंटाई की नहीं। अवस्थाएँ फल छंटाई के बाद के दिनों में गिनी जाती हैं; समय-सारिणी थॉम्पसन सीडलेस के लिए है।"
+      },
+      "sowing_defaults": {"month_day": "10-15", "window": "10-01 to 10-31", "source_id": "S4"},
+      "phenology": {
+        "method": "calendar_days",
+        "base_temp_c": null,
+        "upper_temp_c": null,
+        "stages": [
+          {"key": "shoot_growth", "label": {"en": "Bud break and shoot growth", "mr": "डोळे फुटणे व फुटींची वाढ", "hi": "कलियाँ फूटना और प्ररोह वृद्धि"}, "start": 0, "end": 41, "source_id": "S4"},
+          {"key": "bloom_to_shatter", "label": {"en": "Flowering to berry set", "mr": "फुलोरा व मणी धारणा", "hi": "फूल आना और दाने बनना"}, "start": 41, "end": 56, "source_id": "S4"},
+          {"key": "berry_growth", "label": {"en": "Berry growth and development", "mr": "मण्यांची वाढ", "hi": "दानों का विकास"}, "start": 56, "end": 106, "source_id": "S4"},
+          {"key": "ripening_harvest", "label": {"en": "Ripening to harvest", "mr": "पक्वता व काढणी", "hi": "पकना और तुड़ाई"}, "start": 106, "end": null, "source_id": "S4"}
+        ],
+        "uncertainty_days": null
+      },
+      "thresholds": {
+        "shoot_growth": {"frost_c": -1.1, "heat_c": null, "min_frost_override_c": -1.1, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.8, 'Grape' (Krewer 1988): new growth -1.1 deg C. Generic Vitis value, not Thompson Seedless-specific. Heat threshold not sourced."},
+        "bloom_to_shatter": {"frost_c": -1.1, "heat_c": null, "min_frost_override_c": -1.1, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.8 new-growth value applied to flower clusters (interpretation). PRD sec. 7.1 example cites a 4 deg C grape flowering threshold; no source for that was found. No sourced chilling threshold for poor berry set."},
+        "berry_growth": {"frost_c": 7.0, "heat_c": null, "min_frost_override_c": 7.0, "max_heat_override_c": null, "source_id": "S6", "note": "ICAR-NRCG advisory: pink pigmentation in white seedless bunches nearing veraison when minimum temperature drops below 7 deg C for one to two days. Physiological cold disorder, not freezing; applies to white seedless varieties (Thompson Seedless and mutants), not coloured varieties."},
+        "ripening_harvest": {"frost_c": -2.7, "heat_c": null, "min_frost_override_c": -2.7, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.4: highest freezing temperature of grape (Vitis vinifera) fruit -2.7 deg C (storage study). NRCG advisories mention berry cracking with low temperature near harvest but give no number."}
+      },
+      "spoilage_factor": {"value": null, "source_id": null},
+      "verified": false
+    },
+    "soybean": {
+      "names": {"en": "Soybean", "mr": "सोयाबीन", "hi": "सोयाबीन"},
+      "type": "seasonal",
+      "agmarknet_commodity": "Soyabean",
+      "varieties": [
+        {"key": "js_335", "name": {"en": "JS 335", "mr": "जेएस 335", "hi": "जेएस 335"}},
+        {"key": "maus_71", "name": {"en": "MAUS 71 (Samruddhi)", "mr": "एमएयूएस 71 (समृद्धी)", "hi": "एमएयूएस 71 (समृद्धि)"}},
+        {"key": "maus_158", "name": {"en": "MAUS 158", "mr": "एमएयूएस 158", "hi": "एमएयूएस 158"}},
+        {"key": "maus_612", "name": {"en": "MAUS 612", "mr": "एमएयूएस 612", "hi": "एमएयूएस 612"}},
+        {"key": "kds_726", "name": {"en": "Phule Sangam (KDS 726)", "mr": "फुले संगम (केडीएस 726)", "hi": "फुले संगम (केडीएस 726)"}},
+        {"key": "js_93_05", "name": {"en": "JS 93-05", "mr": "जेएस 93-05", "hi": "जेएस 93-05"}}
+      ],
+      "season_start_event": "sowing",
+      "season_start_label": {"en": "Sowing date", "mr": "पेरणीची तारीख", "hi": "बुवाई की तारीख"},
+      "season_start_hint": {
+        "en": "Enter your sowing date. Sow only after 75-100 mm of rain has fallen within 2-3 days; the normal rainfed window is 15 June to 15 July.",
+        "mr": "पेरणीची तारीख टाका. २-३ दिवसांत ७५-१०० मिमी पाऊस झाल्यावरच पेरणी करा; कोरडवाहू पेरणीचा नेहमीचा कालावधी १५ जून ते १५ जुलै आहे.",
+        "hi": "बुवाई की तारीख डालें। 2-3 दिनों में 75-100 मिमी बारिश होने के बाद ही बुवाई करें; वर्षा-आधारित बुवाई का सामान्य समय 15 जून से 15 जुलाई है।"
+      },
+      "sowing_defaults": {"month_day": "06-30", "window": "06-15 to 07-15", "source_id": "S12"},
+      "phenology": {
+        "method": "gdd",
+        "base_temp_c": 10,
+        "upper_temp_c": null,
+        "stages": [
+          {"key": "germination_emergence", "label": {"en": "Germination and emergence", "mr": "उगवण", "hi": "अंकुरण"}, "start": 0, "end": 66.7, "source_id": "S11"},
+          {"key": "vegetative", "label": {"en": "Vegetative growth", "mr": "शाकीय वाढ", "hi": "वानस्पतिक वृद्धि"}, "start": 66.7, "end": 590.8, "source_id": "S11"},
+          {"key": "flowering", "label": {"en": "Flowering", "mr": "फुलोरा", "hi": "फूल आना"}, "start": 590.8, "end": 678.5, "source_id": "S11"},
+          {"key": "pod_development", "label": {"en": "Pod formation and seed filling", "mr": "शेंगा लागणे व दाणे भरणे", "hi": "फली बनना और दाना भरना"}, "start": 678.5, "end": 1548.3, "source_id": "S11"},
+          {"key": "maturity", "label": {"en": "Physiological maturity", "mr": "पक्वता", "hi": "परिपक्वता"}, "start": 1548.3, "end": 1695.1, "source_id": "S11"}
+        ],
+        "uncertainty_days": null
+      },
+      "thresholds": {
+        "germination_emergence": {"frost_c": -3, "heat_c": null, "min_frost_override_c": -4, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.5 (after Ventskevich 1958), soybeans, germination: '-3, -4' deg C. The page does not explain the two numbers; read here as the range of critical temperatures (warmer value = default, colder value = override floor). Frost is not a realistic kharif risk in Maharashtra. Heat threshold not sourced."},
+        "vegetative": {"frost_c": null, "heat_c": null, "min_frost_override_c": null, "max_heat_override_c": null, "source_id": null, "note": "FAO Table 4.5 has no vegetative-stage column; no other source read."},
+        "flowering": {"frost_c": -2, "heat_c": null, "min_frost_override_c": -3, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.5, soybeans, flowering: '-2, -3' deg C (same two-number interpretation). Heat threshold for flower/pod abortion not sourced."},
+        "pod_development": {"frost_c": -2, "heat_c": null, "min_frost_override_c": -3, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.5, soybeans, fruiting: '-2, -3' deg C."},
+        "maturity": {"frost_c": -2, "heat_c": null, "min_frost_override_c": -3, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.5, soybeans, fruiting: '-2, -3' deg C."}
+      },
+      "spoilage_factor": {"value": null, "source_id": null},
+      "verified": false
+    },
+    "cotton": {
+      "names": {"en": "Cotton", "mr": "कापूस", "hi": "कपास"},
+      "type": "seasonal",
+      "agmarknet_commodity": "Cotton",
+      "varieties": [
+        {"key": "bt_hybrid", "name": {"en": "Bt hybrid", "mr": "बीटी संकरित", "hi": "बीटी संकर"}},
+        {"key": "pkv_rajat", "name": {"en": "PKV Rajat", "mr": "पीकेव्ही रजत", "hi": "पीकेवी रजत"}},
+        {"key": "aka_5", "name": {"en": "AKA-5 (desi)", "mr": "एकेए-5 (देशी)", "hi": "एकेए-5 (देसी)"}}
+      ],
+      "season_start_event": "sowing",
+      "season_start_label": {"en": "Sowing date", "mr": "लागवड / पेरणीची तारीख", "hi": "बुवाई की तारीख"},
+      "season_start_hint": {
+        "en": "Enter your sowing date. Normal rainfed sowing is 15-30 June; irrigated pre-monsoon sowing is 20-30 May. Stage timings assume a 180-200-day Bt hybrid.",
+        "mr": "लागवडीची (पेरणीची) तारीख टाका. कोरडवाहू लागवड साधारणपणे १५-३० जून; बागायती मान्सूनपूर्व लागवड २०-३० मे. अवस्थांचे वेळापत्रक १८०-२०० दिवसांच्या बीटी संकरित वाणासाठी आहे.",
+        "hi": "बुवाई की तारीख डालें। वर्षा-आधारित बुवाई सामान्यतः 15-30 जून और सिंचित (मानसून-पूर्व) बुवाई 20-30 मई होती है। अवस्थाओं का समय 180-200 दिन वाले बीटी संकर के लिए है।"
+      },
+      "sowing_defaults": {"month_day": "06-22", "window": "06-15 to 06-30", "source_id": "S12"},
+      "phenology": {
+        "method": "calendar_days",
+        "base_temp_c": null,
+        "upper_temp_c": null,
+        "stages": [
+          {"key": "initial", "label": {"en": "Establishment (emergence and seedling)", "mr": "उगवण व रोप अवस्था", "hi": "अंकुरण और पौध अवस्था"}, "start": 0, "end": 30, "source_id": "S3"},
+          {"key": "crop_development", "label": {"en": "Vegetative growth and squaring", "mr": "शाकीय वाढ व पात्या लागणे", "hi": "वानस्पतिक वृद्धि और कलियाँ बनना"}, "start": 30, "end": 80, "source_id": "S3"},
+          {"key": "mid_season", "label": {"en": "Flowering and boll development", "mr": "फुले व बोंडे लागणे", "hi": "फूल और टिंडे बनना"}, "start": 80, "end": 140, "source_id": "S3"},
+          {"key": "late_season", "label": {"en": "Boll opening and picking", "mr": "बोंडे फुटणे व वेचणी", "hi": "टिंडे खुलना और चुनाई"}, "start": 140, "end": 195, "source_id": "S3"}
+        ],
+        "uncertainty_days": null
+      },
+      "thresholds": {
+        "initial": {"frost_c": -1, "heat_c": null, "min_frost_override_c": -2, "max_heat_override_c": null, "source_id": "S2", "note": "FAO S2 Table 4.5 (after Ventskevich 1958), cotton, germination: '-1, -2' deg C (warmer value = default, colder = override floor). Heat threshold not sourced for this stage."},
+        "crop_development": {"frost_c": null, "heat_c": null, "min_frost_override_c": null, "max_heat_override_c": null, "source_id": null, "note": "FAO Table 4.5 has no vegetative/squaring column; no other source read."},
+        "mid_season": {"frost_c": -1, "heat_c": 43, "min_frost_override_c": -2, "max_heat_override_c": 45, "source_id": "S2", "note": "frost_c/min_frost_override_c: FAO S2 Table 4.5, cotton, flowering '-1, -2' deg C. heat_c/max_heat_override_c: CICR Technical Bulletin No. 2 (S15) p.7 sec. 4 says 26-32 deg C is desirable by day during flowering and fruiting and the crop tolerates short periods up to 43-45 deg C only if soil moisture is favourable. 43 is the lower end of that tolerance limit, so under moisture stress damage may begin lower."},
+        "late_season": {"frost_c": -2, "heat_c": 43, "min_frost_override_c": -3, "max_heat_override_c": 45, "source_id": "S2", "note": "frost: FAO S2 Table 4.5, cotton, fruiting '-2, -3' deg C. heat: CICR S15 p.7 sec. 4 (flowering and fruiting, 43-45 deg C short-term tolerance with favourable soil moisture)."}
+      },
+      "spoilage_factor": {"value": null, "source_id": null},
+      "verified": false
+    },
+    "sugarcane": {
+      "names": {"en": "Sugarcane", "mr": "ऊस", "hi": "गन्ना"},
+      "type": "seasonal",
+      "agmarknet_commodity": "Sugarcane",
+      "varieties": [
+        {"key": "co_86032", "name": {"en": "Co 86032 (Nira)", "mr": "को 86032 (निरा)", "hi": "को 86032 (नीरा)"}},
+        {"key": "com_0265", "name": {"en": "Phule 265 (CoM 0265)", "mr": "फुले 265 (कोएम 0265)", "hi": "फुले 265 (कोएम 0265)"}},
+        {"key": "co_92005", "name": {"en": "Co 92005", "mr": "को 92005", "hi": "को 92005"}},
+        {"key": "ms_10001", "name": {"en": "Phule 10001 (MS 10001)", "mr": "फुले 10001 (एमएस 10001)", "hi": "फुले 10001 (एमएस 10001)"}},
+        {"key": "co_94012", "name": {"en": "Co 94012", "mr": "को 94012", "hi": "को 94012"}}
+      ],
+      "season_start_event": "planting",
+      "season_start_label": {"en": "Planting date", "mr": "ऊस लागवडीची तारीख", "hi": "गन्ना बुवाई की तारीख"},
+      "season_start_hint": {
+        "en": "Enter your planting date: adsali (15 Jul-15 Aug), pre-seasonal (15 Oct-15 Nov) or suru (15 Jan-15 Feb). Stage lengths assume a 12-14-month suru crop; adsali and pre-seasonal crops run longer.",
+        "mr": "ऊस लागवडीची तारीख टाका: आडसाली (१५ जुलै-१५ ऑगस्ट), पूर्वहंगामी (१५ ऑक्टोबर-१५ नोव्हेंबर) किंवा सुरू (१५ जानेवारी-१५ फेब्रुवारी). अवस्थांचा कालावधी १२-१४ महिन्यांच्या सुरू उसासाठी आहे; आडसाली व पूर्वहंगामी ऊस जास्त काळ चालतो.",
+        "hi": "गन्ना बुवाई की तारीख डालें: आडसाली (15 जुलाई-15 अगस्त), पूर्व-मौसमी (15 अक्टूबर-15 नवंबर) या सुरू (15 जनवरी-15 फरवरी)। अवस्थाओं की अवधि 12-14 महीने की सुरू फसल के लिए है; आडसाली और पूर्व-मौसमी फसल अधिक समय लेती है।"
+      },
+      "sowing_defaults": {"month_day": "02-01", "window": "01-15 to 02-15", "source_id": "S17"},
+      "phenology": {
+        "method": "calendar_days",
+        "base_temp_c": null,
+        "upper_temp_c": null,
+        "stages": [
+          {"key": "germination", "label": {"en": "Germination", "mr": "उगवण", "hi": "अंकुरण"}, "start": 0, "end": 35, "source_id": "S3"},
+          {"key": "tillering", "label": {"en": "Tillering", "mr": "फुटवे येणे", "hi": "कल्ले निकलना"}, "start": 35, "end": 95, "source_id": "S3"},
+          {"key": "grand_growth", "label": {"en": "Grand growth", "mr": "जोमदार वाढ", "hi": "तीव्र वृद्धि"}, "start": 95, "end": 285, "source_id": "S3"},
+          {"key": "maturity", "label": {"en": "Maturity and ripening", "mr": "पक्वता", "hi": "परिपक्वता"}, "start": 285, "end": 405, "source_id": "S3"}
+        ],
+        "uncertainty_days": null
+      },
+      "thresholds": {
+        "germination": {"frost_c": null, "heat_c": null, "min_frost_override_c": null, "max_heat_override_c": null, "source_id": null, "note": "No damage threshold found in a source that could be read. MPKV (S17) gives an optimum of 20-32 deg C for germination; an optimum range is not a damage threshold."},
+        "tillering": {"frost_c": null, "heat_c": null, "min_frost_override_c": null, "max_heat_override_c": null, "source_id": null, "note": "No damage threshold sourced."},
+        "grand_growth": {"frost_c": null, "heat_c": null, "min_frost_override_c": null, "max_heat_override_c": null, "source_id": null, "note": "No damage threshold sourced. MPKV (S17) optimum 20-30 deg C, humidity 80-85%."},
+        "maturity": {"frost_c": null, "heat_c": null, "min_frost_override_c": null, "max_heat_override_c": null, "source_id": null, "note": "No damage threshold sourced. MPKV (S17): ripening favoured by cool, dry weather with night temperature 7-14 deg C (a favourable range, not a damage threshold)."}
+      },
+      "spoilage_factor": {"value": null, "source_id": null},
+      "verified": false
+    }
+  },
+  "sources": {
+    "S1": {"title": "Freezing Temperatures for Some Fruit, Nut & Oil Plants (minimum temperature table, values in deg F)", "institution": "California Rare Fruit Growers, Golden Gate Chapter (compiled by Idell Weydemeyer)", "year": 2012, "url": "http://crfg.org/chapters/golden_gate/Min%20temp%20fruit%202012%20iw2%20-1.pdf", "accessed": "2026-11-02", "locator": "p.1 table and notes a-c ('ball park figures given for older plants; flowers and fruit ... freeze earlier'): Mango 25, 'flowers, fruit die at 40'; Pomegranate 12; Grape - European 10. Repeated in p.2-3 alphabetical table ('flowers and small fruit killed at 40')."},
+    "S2": {"title": "Frost Protection: fundamentals, practice and economics, Volume 1 (FAO Environment and Natural Resources Series 10), Chapter 4: Frost damage, physiology and critical temperatures", "institution": "FAO (R.L. Snyder and J.P. de Melo-Abreu)", "year": 2005, "url": "https://www.fao.org/4/y7223e/y7223e0a.htm", "accessed": "2026-11-02", "locator": "Ch.4 Introduction (+12.5 deg C chilling note); Table 4.4 highest freezing temperature of fresh fruit (after Whiteman 1957): grape fruit -2.7, mango -1.4, pomegranate -3.0; Table 4.5 critical damage temperatures (after Ventskevich 1958), germination/flowering/fruiting: cotton '-1, -2'/'-1, -2'/'-2, -3', soybeans '-3, -4'/'-2, -3'/'-2, -3'; Table 4.8 grapevines: Grape (Krewer 1988) new growth -1.1. HTML edition of PRD ref 15."},
+    "S3": {"title": "Crop Evapotranspiration: Guidelines for computing crop water requirements (FAO Irrigation and Drainage Paper 56), Chapter 6", "institution": "FAO (R.G. Allen, L.S. Pereira, D. Raes, M. Smith)", "year": 1998, "url": "https://www.fao.org/4/x0490e/x0490e0b.htm", "accessed": "2026-11-02", "locator": "Table 11, lengths of crop development stages (days): Cotton 30/50/60/55, total 195, Mar-May, Egypt; Pakistan; Calif.; Sugarcane, virgin 35/60/190/120, total 405, Low Latitudes. Table footnote: lengths are indicative and local information should be obtained."},
+    "S4": {"title": "Irrigation schedule based upon pan evaporation for various growth stages of Thompson Seedless vines raised on Dogridge rootstock", "institution": "ICAR-National Research Centre for Grapes, Pune (A.K. Upadhyay and J. Sharma)", "year": null, "url": "https://www.nrcgrapes.in/recommended-irrigation-schedule.htm", "accessed": "2026-11-02", "locator": "Table, 'Fruit pruning' rows: Shoot growth 1-40 days (October-November); Bloom to Shatter 41-55 (November-December); Berry growth and development 56-70 and 71-105 (December-January); Ripening to Harvest 106-harvest (January-March). Notes: 'it takes 10-12 days for sprouting'."},
+    "S5": {"title": "Calendar of activities for fruit pruning season based on different crop growth stages of grapevine (e-publication)", "institution": "ICAR-National Research Centre for Grapes, Pune (R.G. Somkuwar; compiled by S.K. Holkar)", "year": 2021, "url": "https://www.nrcgrapes.in/technical%20bulletins/Calendar%20of%20Activities%20during%20different%20growth%20stages%20of%20grapevine%20-Fruit%20Pruning.pdf", "accessed": "2026-11-02", "locator": "Table: p.6 (8-10 days after pruning, initiation of sprouting), p.7 (11-15, three-leaf stage), p.14 (36-50 days, flowering and berry setting), p.18 (50-60 days, berry development), p.21 (veraison stage), p.23 (90 days after fruit pruning, post-veraison up to harvesting)."},
+    "S6": {"title": "Weather Based Grape Advisory, 08-14 January 2026 (English)", "institution": "ICAR-National Research Centre for Grapes, Pune", "year": 2026, "url": "https://www.nrcgrapes.in/archives-Weekly%20Advisory/English%20Advisory%20%208%20Jan-%2014%20Jan.pdf", "accessed": "2026-11-02", "locator": "Sec. III Canopy management, item 4 'Effect of low temperature', pp.5-6: pink pigmentation in white seedless bunches nearing veraison when minimum temperature drops below 7 deg C for one to two days. Same text in the 15-21 Jan 2026 and 18-24 / 25-31 Dec advisories."},
+    "S7": {"title": "Recommended Varieties", "institution": "ICAR-National Research Centre for Grapes, Pune", "year": null, "url": "https://www.nrcgrapes.in/Recommended-Varieties.htm", "accessed": "2026-11-02", "locator": "Table grapes, 'Suitable varieties for different grape growing regions', row Maharashtra, Northern Karnataka and Hyderabad."},
+    "S8": {"title": "Thermal requirement of pomegranate varieties growing in Maharashtra (Indian Journal of Horticulture 73(3):327-333, doi:10.5958/0974-0112.2016.00072.4)", "institution": "ICAR-National Research Centre on Pomegranate, Solapur (D.T. Meshram, Ram Chandra, N.V. Singh, R.K. Pal)", "year": 2016, "url": "https://journal.iahs.org.in/index.php/ijh/article/download/1599/1092", "accessed": "2026-11-02", "locator": "p.328 methods (Mrig bahar, defoliation mid-May, GDD base 10 deg C); p.330 results: 'highest and lowest values were 255 days in Bhagwa and 170 days in G-137 from defoliation to harvesting'; mean 63 days to fruit set; Bhagwa more than 180 days from fruit set to maturity; abstract: Bhagwa 4105 deg-days defoliation to harvest."},
+    "S9": {"title": "Determination of maturity indices for harvesting of pomegranate (Punica granatum) (Indian Journal of Agricultural Sciences 87(9):1225-1230, doi:10.56093/ijas.v87i9.74209)", "institution": "ICAR-National Research Centre on Pomegranate, Solapur (K. Dhinesh Babu et al.)", "year": 2017, "url": "https://epubs.icar.org.in/index.php/IJAgS/article/view/74209", "accessed": "2026-11-02", "locator": "Abstract p.1225 (harvest index 180 days after full bloom for Bhagwa); p.1226 materials and methods (mrig bahar; pruning, defoliation etc. during last week of May)."},
+    "S10": {"title": "Influence of sea proximity and soil variations on vegetative growth, flowering and yield of Alphonso mango under coastal belt of Konkan (Journal of Pharmacognosy and Phytochemistry 10(1):1249-1255)", "institution": "Dr. Balasaheb Sawant Konkan Krishi Vidyapeeth, Dapoli (S.G. Mahadik, M.B. Burondkar et al.)", "year": 2021, "url": "https://phytojournal.com/archives/2021/vol10issue1/PartR/10-1-88-310.pdf", "accessed": "2026-11-02", "locator": "Table 3 (dates of flowering induction, 18 Nov to 18 Jan); Table 4 (days to flowering from vegetative flush: 59.11/60.28/62.44 by location); Table 5 (days to harvesting from vegetative flush: 185.44/189.67/190.67); Table 6 (fruit set to maturity: 79/98/85 days; 732-737 deg-days), pp.1252-1254."},
+    "S11": {"title": "Study the heat unit requirement of soybean (Glycine max) varieties under varied weather condition at Parbhani (Journal of Pharmacognosy and Phytochemistry 7(3):526-530)", "institution": "Vasantrao Naik Marathwada Krishi Vidyapeeth, Parbhani (K.K. Chavan, A.M. Khobragade, Y.E. Kadam, R.B. Mane)", "year": 2018, "url": "https://phytojournal.com/archives/2018/vol7issue3/PartH/7-2-609-932.pdf", "accessed": "2026-11-02", "locator": "p.527 methods (GDD base temperature 10 deg C); Table 3 p.528, row D1 (MW 27, 2-8 July sowing): P1 66.7, P2 249.4, P3 117.8, P4 156.9, P5 87.7, P6 113.2, P7 283.1, P8 285.6, P9 187.9, P10 146.9, total 1695.1 deg-days."},
+    "S12": {"title": "Agriculture Contingency Plan for District Akola, Maharashtra", "institution": "ICAR-Central Research Institute for Dryland Agriculture (CRIDA) with Dr. Panjabrao Deshmukh Krishi Vidyapeeth, Akola", "year": 2011, "url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Akola.pdf", "accessed": "2026-11-02", "locator": "Sec. 1.12 'Sowing window for 5 major field crops', printed p.7: Kharif rainfed cotton 15th June-30th June, soybean 15th June-15th July; Kharif irrigated cotton 20th May-30th May (pre-monsoon)."},
+    "S13": {"title": "Agromet Advisory Bulletin, District Solapur, 28.06.2024", "institution": "Gramin Krishi Mausam Sewa, District Agromet Unit, KVK Mohol (Mahatma Phule Krishi Vidyapeeth)", "year": 2024, "url": "https://mpkv.ac.in/Uploads/Weather/Solapur%20English%2028.06.2024_20240629090222.pdf", "accessed": "2026-11-02", "locator": "pp.2-3, Soybean sowing row: 'Sowing of Soyabean crop should be done up to 15th July'; recommended varieties JS-335, JS-9305, Phule Sangam (KDS 726), MAUS-158, MAUS-612 and others."},
+    "S14": {"title": "Agromet Advisory Bulletin, District Solapur, 28.06.2022", "institution": "Gramin Krishi Mausam Sewa, District Agromet Unit, KVK Mohol (Mahatma Phule Krishi Vidyapeeth)", "year": 2022, "url": "https://mpkv.ac.in/Uploads/Weather/Solapur%20English%2028.06.2022_20220628051435.pdf", "accessed": "2026-11-02", "locator": "p.1 SMS advisory: 'Sowing should be done only after good rainfall is received (75-100 mm in 2-3 days)'; soybean varieties incl. Samrudhi (MAUS-71)."},
+    "S15": {"title": "Abiotic Stresses in Cotton: A Physiological Approach (CICR Technical Bulletin No. 2)", "institution": "ICAR-Central Institute for Cotton Research, Nagpur", "year": null, "url": "https://cicr.org.in/wp-content/uploads/2026/04/TC_BL_01-1.pdf", "accessed": "2026-11-02", "locator": "p.7, sec. 4 'High temperature stress': desirable day temperature 26-32 deg C during flowering and fruiting; tolerates short periods up to 43-45 deg C if soil moisture is favourable."},
+    "S16": {"title": "Bt Cotton Q&A: Questions and Answers", "institution": "K.R. Kranthi, ICAR-Central Institute for Cotton Research, Nagpur; published by Indian Society for Cotton Improvement, Mumbai", "year": 2012, "url": "https://cicr.org.in/wp-content/uploads/2026/04/TC_BL_06.pdf", "accessed": "2026-11-02", "locator": "PDF p.30: 'Most of the Bt hybrids are of 180-to 200-day duration'; PDF p.35: in rainfed Vidarbha, boll formation in long-duration hybrids starts in October and peaks in November."},
+    "S17": {"title": "Information about Cropwise Improved / Hybrid Varieties Developed by University: Sugarcane", "institution": "Mahatma Phule Krishi Vidyapeeth, Rahuri (Central Sugarcane Research Station, Padegaon)", "year": 2024, "url": "https://mpkv.ac.in/Uploads/Research/09%20-%20Sugarcane_20241014054253.pdf", "accessed": "2026-11-02", "locator": "Variety sheets pp.1-17 (e.g. Co-740 p.2, Nira (Co-86032) p.8, Phule-265 p.10, Co-92005 p.11, MS-10001 p.12): planting periods Adsali 15 July-15 August (16-18 months), Preseason 15 October-15 November (14-16 months), Suru 15 January-15 February (12-14 months); stage climate (germination optimum 20-32 deg C, grand growth 20-30 deg C, maturity night temperature 7-14 deg C)."},
+    "S18": {"title": "AGMARKNET 2.0 daily price and arrival filters (commodity master list)", "institution": "Directorate of Marketing and Inspection, Ministry of Agriculture and Farmers Welfare", "year": 2026, "url": "https://api.agmarknet.gov.in/v1/daily-price-arrival/filters", "accessed": "2026-11-02", "locator": "data.cmdt_data: cmdt_id 20 'Mango', 160 'Pomegranate', 22 'Grapes', 13 'Soyabean', 15 'Cotton', 122 'Sugarcane'."}
+  }
+}

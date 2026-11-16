@@ -1,0 +1,6 @@
+.error { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-3); color: var(--color-text-secondary); }
+.error[data-variant='section'] {
+  padding: var(--sp-4); border-radius: var(--r-md); border: var(--bw-hairline) solid var(--color-border-subtle); background: var(--color-bg-surface);
+}
+.message { flex: 1 1 14rem; }
+.code { flex-basis: 100%; font-size: var(--fs-small); color: var(--color-text-secondary); font-variant-numeric: tabular-nums; font-family: ui-monospace, monospace; }

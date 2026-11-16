@@ -1,0 +1,6 @@
+.toggle {
+  width: var(--tap-min); height: var(--tap-min); border: none; border-radius: var(--r-full);
+  background: transparent; color: var(--color-text-secondary); display: inline-flex; align-items: center; justify-content: center;
+}
+.toggle:hover { background: var(--color-bg-sunken); color: var(--color-text-primary); }
+.toggle:focus-visible { outline: var(--bw-strong) solid var(--color-focus-ring); outline-offset: 2px; }

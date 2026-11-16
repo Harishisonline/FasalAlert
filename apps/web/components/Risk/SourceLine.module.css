@@ -1,0 +1,13 @@
+.line { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--sp-1); font-size: var(--fs-small); color: var(--color-text-muted); }
+.wrap { display: inline-flex; align-items: center; gap: var(--sp-1); min-width: 0; }
+.item { display: inline-flex; align-items: center; gap: var(--sp-1); min-width: 0; }
+.item svg { flex: none; }
+.text { overflow-wrap: anywhere; }
+.sep { padding: 0 var(--sp-1); }
+.verified { color: var(--color-success-ink); font-weight: 600; }
+.verifiedIcon { color: var(--color-success-ink); }
+.item[data-stale] { color: var(--color-stale-ink); }
+.staleIcon { color: var(--color-stale-ink); }
+/* The link icon gets a 48px hit area without growing the line (design.md 14.8). */
+.link { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; color: var(--color-text-brand); }
+.link::before { content: ''; position: absolute; inset: -12px; }

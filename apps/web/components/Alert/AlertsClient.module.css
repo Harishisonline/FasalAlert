@@ -1,0 +1,7 @@
+.wrap { display: grid; gap: var(--sp-4); min-width: 0; }
+.filters { display: flex; gap: var(--sp-2); overflow-x: auto; padding: 4px 0; scrollbar-width: none; mask-image: linear-gradient(to right, black 85%, transparent); }
+@media (min-width: 480px) { .filters { flex-wrap: wrap; overflow: visible; mask-image: none; } }
+.group { display: grid; gap: var(--sp-2); }
+.groupTitle { font-size: var(--fs-body); font-weight: 600; color: var(--color-text-secondary); }
+.list { list-style: none; display: grid; gap: var(--sp-3); }
+.empty { display: grid; gap: var(--sp-2); justify-items: start; }

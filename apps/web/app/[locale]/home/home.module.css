@@ -1,0 +1,36 @@
+/* Home dashboard: the decision and weather in the wide column, the overview panels beside it from 1100px. */
+.dashboard { display: grid; gap: var(--sp-5); grid-template-columns: minmax(0, 1fr); align-items: start; }
+.primary { display: grid; gap: var(--sp-5); min-width: 0; }
+.side { display: grid; gap: var(--sp-4); min-width: 0; }
+.today { display: grid; gap: var(--sp-3); min-width: 0; }
+.sectionTitle { font-size: var(--fs-heading); }
+.extra { display: grid; gap: var(--sp-4); }
+.more { justify-self: start; display: inline-flex; align-items: center; gap: var(--sp-1); min-height: 44px; font-weight: 600; color: var(--color-text-brand); text-decoration: none; }
+.more:hover { text-decoration: underline; }
+.panel { display: grid; gap: var(--sp-3); align-content: start; min-width: 0; padding: var(--sp-4); border-radius: var(--r-lg); background: var(--color-bg-surface); border: var(--bw-hairline) solid var(--color-border-subtle); }
+.panelHead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+.panelTitle { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-body); font-weight: 700; }
+.panelTitle svg { color: var(--color-text-brand); }
+.panelLink { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--fs-small); font-weight: 600; color: var(--color-text-brand); }
+.muted { color: var(--color-text-secondary); font-size: var(--fs-small); }
+.note { font-size: var(--fs-small); color: var(--color-text-secondary); padding: var(--sp-2) var(--sp-3); border-radius: var(--r-sm); background: var(--color-bg-sunken); }
+.staleNote { font-size: var(--fs-small); color: var(--color-stale-ink); }
+.fieldList, .alertList, .quick { list-style: none; display: grid; gap: 2px; }
+.fieldRow, .alertRow { display: flex; align-items: center; gap: var(--sp-2); min-height: 48px; padding: var(--sp-1) var(--sp-2); border-radius: var(--r-sm); color: var(--color-text-primary); text-decoration: none; }
+.fieldRow:hover, .alertRow:hover { background: var(--color-bg-sunken); }
+.fieldRow[aria-current='true'] { background: var(--color-bg-brand-tint); font-weight: 600; }
+.fieldName { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.alertText { flex: 1; min-width: 0; display: grid; }
+.stack { display: grid; gap: var(--sp-1); }
+.inline { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); font-weight: 600; }
+.big { font-size: var(--fs-title); font-weight: 700; font-variant-numeric: tabular-nums; }
+.unit { font-size: var(--fs-small); font-weight: 500; color: var(--color-text-secondary); }
+.quick { grid-template-columns: minmax(0, 1fr); }
+.quick a { display: flex; align-items: center; gap: var(--sp-2); min-height: 48px; padding: 0 var(--sp-2); border-radius: var(--r-sm); color: var(--color-text-primary); text-decoration: none; font-weight: 600; }
+.quick a:hover { background: var(--color-bg-sunken); }
+.quick svg { color: var(--color-text-brand); flex: none; }
+.emptyActions { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+@media (min-width: 640px) and (max-width: 1279px) { .side { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .dashboard { grid-template-columns: minmax(0, 1fr) 340px; } }
+.working { display: grid; gap: var(--sp-2); }
+.workingText { font-size: var(--fs-small); color: var(--color-text-secondary); }

@@ -1,0 +1,10 @@
+.wrap { position: relative; z-index: 1; }
+.button {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); width: 100%;
+  min-height: var(--tap-min); padding: 0; border: none; background: none; color: var(--color-text-brand);
+  font-size: var(--fs-body); font-weight: 600; text-align: start;
+}
+.chevron { flex: none; transition: transform var(--dur-base) var(--ease-standard); }
+.chevron[data-open] { transform: rotate(180deg); }
+.panel { padding-top: var(--sp-2); }
+.inner { display: grid; gap: var(--sp-3); }

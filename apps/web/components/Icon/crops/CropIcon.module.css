@@ -1,0 +1,6 @@
+.icon { flex: none; }
+.duotone .fillA { fill: var(--color-warning-tint); }
+.duotone .fillB { fill: var(--color-bg-brand-tint); }
+.duotone .fillDanger { fill: var(--color-danger-tint); }
+.duotone .fillInfo { fill: var(--color-info-tint); }
+.duotone .fillWhite { fill: var(--color-bg-surface); }

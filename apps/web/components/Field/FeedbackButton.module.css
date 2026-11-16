@@ -1,0 +1,6 @@
+.wrap { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+.button { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: var(--tap-min); padding: 0 var(--sp-3); border-radius: var(--r-md); border: var(--bw-control) solid var(--color-border-strong); background: var(--color-bg-surface); color: var(--color-text-primary); font-weight: 600; }
+.button[aria-pressed='true'] { background: var(--color-bg-sunken); color: var(--color-text-secondary); }
+.button:disabled { cursor: default; }
+.status { font-size: var(--fs-small); color: var(--color-text-secondary); }
+.status:empty { display: none; }

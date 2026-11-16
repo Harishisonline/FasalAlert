@@ -1,0 +1,20 @@
+.card {
+  position: relative; background: var(--color-bg-surface); border: var(--bw-hairline) solid var(--color-border-subtle);
+  border-radius: var(--r-md); padding: var(--sp-4); box-shadow: var(--shadow-0); min-width: 0;
+}
+@media (min-width: 480px) { .card { padding: var(--sp-5); } }
+.card[data-variant='risk'], .card[data-variant='stale'], .card[data-variant='abstain'], .card[data-variant='raw'], .card[data-variant='info'] {
+  border-left-width: var(--bw-risk);
+}
+.card[data-pinned] { border-left-width: var(--bw-risk-pinned); }
+.card[data-variant='risk'][data-level='none'] { border-left-color: var(--risk-none); }
+.card[data-variant='risk'][data-level='low'] { border-left-color: var(--risk-low); }
+.card[data-variant='risk'][data-level='medium'] { border-left-color: var(--risk-medium); }
+.card[data-variant='risk'][data-level='high'] { border-left-color: var(--risk-high); }
+.card[data-variant='risk'][data-level='critical'] { border-left-color: var(--risk-critical); }
+.card[data-variant='risk'][data-level='nodata'] { border-left-color: var(--risk-nodata); border-left-style: dashed; }
+.card[data-variant='risk'][data-level='critical'][data-pinned] { box-shadow: 0 0 0 var(--bw-strong) var(--risk-critical-ring); }
+.card[data-variant='stale'] { border-left-style: dashed; border-left-color: var(--color-stale-border); }
+.card[data-variant='abstain'] { border-left-color: var(--color-abstain-border); background: var(--color-abstain-tint); }
+.card[data-variant='raw'] { border-left-color: var(--color-border-strong); }
+.card[data-variant='info'] { border-left-color: var(--color-info-ink); }

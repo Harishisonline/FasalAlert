@@ -1,0 +1,13 @@
+.legend { min-width: 0; container-type: inline-size; }
+.list { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-2) var(--sp-3); font-size: var(--fs-small); }
+/* One row only when the legend's own box is wide enough (it sits under maps of different widths). */
+@container (min-width: 620px) { .list { grid-template-columns: repeat(6, auto); justify-content: start; } }
+.item { display: flex; align-items: center; gap: 6px; }
+.icon { flex: none; color: var(--color-text-secondary); }
+.swatch { flex: none; width: 20px; height: 14px; border-radius: 3px; outline: 1px solid var(--color-border-strong); outline-offset: -1px; }
+.swatch[data-level='none'] { background: var(--risk-none); }
+.swatch[data-level='low'] { background: radial-gradient(circle, var(--pattern-light-stroke) 1.2px, transparent 1.4px) 0 0 / 8px 8px, var(--risk-low); }
+.swatch[data-level='medium'] { background: repeating-linear-gradient(45deg, var(--pattern-dark-stroke) 0 2px, transparent 2px 6px), var(--risk-medium); }
+.swatch[data-level='high'] { background: repeating-linear-gradient(45deg, var(--pattern-light-stroke) 0 2px, transparent 2px 6px), repeating-linear-gradient(-45deg, var(--pattern-light-stroke) 0 2px, transparent 2px 6px), var(--risk-high); }
+.swatch[data-level='critical'] { background: repeating-linear-gradient(45deg, var(--pattern-critical-stroke) 0 2px, transparent 2px 3.5px), repeating-linear-gradient(-45deg, var(--pattern-critical-stroke) 0 2px, transparent 2px 3.5px), var(--risk-critical); }
+.swatch[data-level='nodata'] { background: repeating-linear-gradient(0deg, var(--pattern-nodata-stroke) 0 1.5px, transparent 1.5px 6px), var(--risk-nodata); }

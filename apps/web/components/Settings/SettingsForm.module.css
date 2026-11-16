@@ -1,0 +1,22 @@
+.form { display: grid; gap: var(--sp-5); }
+.offline { padding: var(--sp-3); border-radius: var(--r-sm); background: var(--color-info-tint); }
+.group { display: grid; gap: var(--sp-3); }
+@media (min-width: 768px) { .group { padding: var(--sp-5); border-radius: var(--r-md); background: var(--color-bg-surface); border: var(--bw-hairline) solid var(--color-border-subtle); } }
+.h2 { font-size: var(--fs-heading); }
+.row { display: grid; gap: var(--sp-1); }
+@media (min-width: 768px) { .row { grid-template-columns: 200px 1fr; align-items: center; gap: var(--sp-3); } }
+.label { font-size: var(--fs-small); font-weight: 600; }
+.control { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); min-width: 0; }
+.input { flex: 1; min-width: 12rem; min-height: var(--tap-comfort); padding: 0 var(--sp-4); border-radius: var(--r-sm); border: var(--bw-control) solid var(--color-border-strong); background: var(--color-bg-surface); font-size: var(--fs-body); }
+.status { font-size: var(--fs-small); }
+.saved { color: var(--color-success-ink); font-weight: 600; }
+.error { color: var(--color-danger-ink); }
+.muted { color: var(--color-text-secondary); font-size: var(--fs-small); }
+.linkRow { display: flex; align-items: center; gap: var(--sp-3); min-height: 56px; padding: 0 var(--sp-4); border-radius: var(--r-md); background: var(--color-bg-surface); border: var(--bw-hairline) solid var(--color-border-subtle); color: var(--color-text-primary); text-decoration: none; font-weight: 600; }
+.linkRow span { flex: 1; }
+.actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.disabledBtn { background: var(--color-bg-sunken); color: var(--color-text-muted); border-color: transparent; cursor: not-allowed; }
+.helpList { list-style: none; display: grid; gap: var(--sp-2); color: var(--color-text-secondary); }
+.helpList strong { color: var(--color-text-primary); }
+.call { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: var(--tap-min); padding: 0 var(--sp-4); border-radius: var(--r-md); border: var(--bw-control) solid var(--color-action-primary); color: var(--color-text-brand); font-weight: 600; text-decoration: none; }
+.call:hover { background: var(--color-bg-brand-tint); }

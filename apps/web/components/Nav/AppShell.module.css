@@ -1,0 +1,11 @@
+.focus, .public { min-height: 100dvh; display: flex; flex-direction: column; }
+/* Room for the fixed bottom bar and the home indicator, so no content sits behind the bar. */
+.frame { min-height: 100dvh; padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom)); }
+@media (min-width: 1024px) {
+  .frame { display: flex; padding-bottom: 0; }
+}
+.content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.offline { padding: 0 var(--sp-4); }
+.offline:empty { display: none; }
+.offline > * { margin-top: var(--sp-3); }
+@media (min-width: 768px) { .offline { padding: 0 var(--sp-6); } }

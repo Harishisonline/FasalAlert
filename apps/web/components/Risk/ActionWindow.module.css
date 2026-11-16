@@ -1,0 +1,31 @@
+.window { display: grid; gap: var(--sp-2); }
+.visual { display: grid; gap: var(--sp-1); }
+.markers { position: relative; height: 3.4em; }
+.window[data-compact] .markers { height: 3em; }
+.marker { position: absolute; top: 0; display: grid; transform: translateX(-50%); white-space: nowrap; font-size: var(--fs-small); text-align: center; }
+.marker[data-edge='start'] { transform: none; text-align: start; }
+.marker[data-edge='end'] { transform: translateX(-100%); text-align: end; }
+.marker[data-alt] { top: 0; }
+.time { font-weight: 600; font-variant-numeric: tabular-nums; }
+.name { color: var(--color-text-secondary); display: inline-flex; gap: 4px; align-items: center; justify-content: inherit; }
+.bar { position: relative; height: 16px; border-radius: var(--r-full); background: var(--color-bg-sunken); overflow: hidden; }
+.seg { position: absolute; top: 0; bottom: 0; }
+.seg[data-seg='best'] { background: var(--color-action-primary); }
+.seg[data-seg='helps'] { background: repeating-linear-gradient(45deg, var(--color-warning-fill) 0 4px, var(--color-warning-tint) 4px 8px); }
+.seg[data-seg='late'] { background: var(--color-bg-sunken); }
+.seg[data-seg='risk'] { background: var(--risk-high); }
+.seg[data-seg='risk'][data-level='low'] { background: var(--risk-low); }
+.seg[data-seg='risk'][data-level='medium'] { background: repeating-linear-gradient(45deg, var(--risk-medium) 0 6px, color-mix(in srgb, var(--risk-medium) 70%, var(--color-text-primary)) 6px 8px); }
+.seg[data-seg='risk'][data-level='critical'] { background: var(--risk-critical); }
+.window[data-passed] .seg[data-seg='best'] { background: var(--color-border-strong); }
+.legend { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-3); font-size: var(--fs-small); color: var(--color-text-secondary); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend span::before { content: ''; width: 12px; height: 12px; border-radius: 3px; background: var(--color-bg-sunken); outline: 1px solid var(--color-border-strong); outline-offset: -1px; }
+.legend [data-seg='best']::before { background: var(--color-action-primary); }
+.legend [data-seg='helps']::before { background: var(--color-warning-fill); }
+.legend [data-seg='risk']::before { background: var(--risk-high); }
+.legend [data-seg='risk'][data-level='low']::before { background: var(--risk-low); }
+.legend [data-seg='risk'][data-level='medium']::before { background: var(--risk-medium); }
+.legend [data-seg='risk'][data-level='critical']::before { background: var(--risk-critical); }
+.passed, .left { font-size: var(--fs-body); font-weight: 600; }
+.passed { color: var(--color-warning-ink); }

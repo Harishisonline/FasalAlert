@@ -1,0 +1,8 @@
+**/node_modules
+**/.next
+**/.venv
+**/__pycache__
+apps/api/data/cache
+apps/api/data/raw_external
+apps/api/data/dev_outbox
+.env

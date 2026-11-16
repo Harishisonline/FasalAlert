@@ -1,0 +1,913 @@
+{
+ "version": "2026.11-draft",
+ "status": "Draft vernacular dictionary. Pending review by native Marathi/Hindi speakers with agronomy background (design.md 18.4).",
+ "weights": {
+  "crop": 20,
+  "pest": 20,
+  "disease": 20,
+  "chemical": 20,
+  "stage": 20,
+  "quantity": 20,
+  "place": 3,
+  "filler": 1,
+  "other": 1
+ },
+ "categories": {
+  "crop": [
+   {
+    "canonical": "mango",
+    "aliases": [
+     "आंबा",
+     "आंबे",
+     "हापूस",
+     "केशर",
+     "आम",
+     "aamba",
+     "amba",
+     "alphonso",
+     "kesar",
+     "आंब्या",
+     "आंब्याच्या"
+    ]
+   },
+   {
+    "canonical": "pomegranate",
+    "aliases": [
+     "डाळिंब",
+     "अनार",
+     "dalimb",
+     "anar",
+     "bhagwa",
+     "भगवा",
+     "डाळिंबा",
+     "डाळींब"
+    ]
+   },
+   {
+    "canonical": "grape",
+    "aliases": [
+     "grapes",
+     "द्राक्ष",
+     "द्राक्षे",
+     "अंगूर",
+     "draksh",
+     "angoor",
+     "द्राक्षा"
+    ]
+   },
+   {
+    "canonical": "cotton",
+    "aliases": [
+     "कापूस",
+     "कपास",
+     "kapus",
+     "kapas",
+     "कापसा",
+     "कपाशी"
+    ]
+   },
+   {
+    "canonical": "soybean",
+    "aliases": [
+     "soyabean",
+     "सोयाबीन",
+     "soyabin",
+     "सोयाबिन"
+    ]
+   },
+   {
+    "canonical": "sugarcane",
+    "aliases": [
+     "ऊस",
+     "गन्ना",
+     "ganna",
+     "उसा",
+     "उस"
+    ]
+   }
+  ],
+  "pest": [
+   {
+    "canonical": "mango hopper",
+    "aliases": [
+     "तुडतुडे",
+     "फुदके"
+    ]
+   },
+   {
+    "canonical": "fruit fly",
+    "aliases": [
+     "फळमाशी",
+     "फल मक्खी"
+    ]
+   },
+   {
+    "canonical": "thrips",
+    "aliases": [
+     "फुलकिडे",
+     "थ्रिप्स"
+    ]
+   },
+   {
+    "canonical": "mealybug",
+    "aliases": [
+     "पिठ्या ढेकूण",
+     "मिलीबग"
+    ]
+   },
+   {
+    "canonical": "pink bollworm",
+    "aliases": [
+     "गुलाबी बोंडअळी",
+     "गुलाबी सुंडी"
+    ]
+   },
+   {
+    "canonical": "whitefly",
+    "aliases": [
+     "पांढरी माशी",
+     "सफेद मक्खी"
+    ]
+   },
+   {
+    "canonical": "aphid",
+    "aliases": [
+     "मावा",
+     "माहू"
+    ]
+   },
+   {
+    "canonical": "woolly aphid",
+    "aliases": [
+     "लोकरी मावा"
+    ]
+   },
+   {
+    "canonical": "stem borer",
+    "aliases": [
+     "खोडकिडा",
+     "तना छेदक"
+    ]
+   },
+   {
+    "canonical": "girdle beetle",
+    "aliases": [
+     "चक्रीभुंगा"
+    ]
+   },
+   {
+    "canonical": "fruit borer",
+    "aliases": [
+     "फळ पोखरणारी अळी"
+    ]
+   },
+   {
+    "canonical": "shoot borer",
+    "aliases": [
+     "शेंडा अळी"
+    ]
+   },
+   {
+    "canonical": "spodoptera",
+    "aliases": [
+     "लष्करी अळी",
+     "तंबाखूची पाने खाणारी अळी"
+    ]
+   }
+  ],
+  "disease": [
+   {
+    "canonical": "bacterial blight",
+    "aliases": [
+     "तेलकट डाग",
+     "तेल्या"
+    ]
+   },
+   {
+    "canonical": "downy mildew",
+    "aliases": [
+     "केवडा",
+     "डाउनी मिल्ड्यू"
+    ]
+   },
+   {
+    "canonical": "powdery mildew",
+    "aliases": [
+     "भुरी",
+     "चूर्णिल आसिता"
+    ]
+   },
+   {
+    "canonical": "anthracnose",
+    "aliases": [
+     "करपा",
+     "डिंक्या"
+    ]
+   },
+   {
+    "canonical": "wilt",
+    "aliases": [
+     "मर",
+     "उकठा"
+    ]
+   },
+   {
+    "canonical": "red rot",
+    "aliases": [
+     "लाल कूज",
+     "लाल सड़न"
+    ]
+   },
+   {
+    "canonical": "rust",
+    "aliases": [
+     "तांबेरा",
+     "गेरुआ"
+    ]
+   },
+   {
+    "canonical": "leaf spot",
+    "aliases": [
+     "पानांवरील ठिपके"
+    ]
+   }
+  ],
+  "chemical": [
+   {
+    "canonical": "chlorpyrifos",
+    "aliases": [
+     "क्लोरपायरीफॉस",
+     "क्लोरपायरीफास"
+    ]
+   },
+   {
+    "canonical": "imidacloprid",
+    "aliases": [
+     "इमिडाक्लोप्रिड"
+    ]
+   },
+   {
+    "canonical": "thiamethoxam",
+    "aliases": [
+     "थायामेथोक्झाम"
+    ]
+   },
+   {
+    "canonical": "mancozeb",
+    "aliases": [
+     "मॅन्कोझेब",
+     "मैंकोजेब"
+    ]
+   },
+   {
+    "canonical": "copper oxychloride",
+    "aliases": [
+     "कॉपर ऑक्सिक्लोराइड",
+     "कॉपर ऑक्सीक्लोराइड"
+    ]
+   },
+   {
+    "canonical": "bordeaux mixture",
+    "aliases": [
+     "बोर्डो मिश्रण"
+    ]
+   },
+   {
+    "canonical": "sulphur",
+    "aliases": [
+     "गंधक",
+     "सल्फर"
+    ]
+   },
+   {
+    "canonical": "carbendazim",
+    "aliases": [
+     "कार्बेन्डाझिम",
+     "कार्बेन्डाजिम"
+    ]
+   },
+   {
+    "canonical": "streptocycline",
+    "aliases": [
+     "स्ट्रेप्टोसायक्लिन"
+    ]
+   },
+   {
+    "canonical": "emamectin benzoate",
+    "aliases": [
+     "इमामेक्टिन बेंझोएट"
+    ]
+   },
+   {
+    "canonical": "profenofos",
+    "aliases": [
+     "प्रोफेनोफॉस"
+    ]
+   },
+   {
+    "canonical": "hexaconazole",
+    "aliases": [
+     "हेक्झाकोनाझोल"
+    ]
+   },
+   {
+    "canonical": "neem seed kernel extract",
+    "aliases": [
+     "निंबोळी अर्क",
+     "नीम"
+    ]
+   },
+   {
+    "canonical": "paclobutrazol",
+    "aliases": [
+     "पॅक्लोब्युट्राझोल",
+     "कल्टार"
+    ]
+   },
+   {
+    "canonical": "urea",
+    "aliases": [
+     "युरिया",
+     "यूरिया"
+    ]
+   },
+   {
+    "canonical": "potassium nitrate",
+    "aliases": [
+     "पोटॅशियम नायट्रेट"
+    ]
+   }
+  ],
+  "stage": [
+   {
+    "canonical": "flowering",
+    "aliases": [
+     "फुलोरा",
+     "मोहोर",
+     "बहर",
+     "फूल आना",
+     "फूल",
+     "फुलोऱ्या",
+     "मोहोरा"
+    ]
+   },
+   {
+    "canonical": "fruit set",
+    "aliases": [
+     "फळधारणा",
+     "फल लगना"
+    ]
+   },
+   {
+    "canonical": "pruning",
+    "aliases": [
+     "छाटणी",
+     "छंटाई"
+    ]
+   },
+   {
+    "canonical": "bahar",
+    "aliases": [
+     "बहार"
+    ]
+   },
+   {
+    "canonical": "budbreak",
+    "aliases": [
+     "डोळे फुटणे"
+    ]
+   },
+   {
+    "canonical": "tillering",
+    "aliases": [
+     "फुटवा",
+     "कल्ले फुटणे"
+    ]
+   },
+   {
+    "canonical": "squaring",
+    "aliases": [
+     "पाते लागणे"
+    ]
+   },
+   {
+    "canonical": "boll formation",
+    "aliases": [
+     "बोंडे लागणे",
+     "टिंडे"
+    ]
+   },
+   {
+    "canonical": "pod filling",
+    "aliases": [
+     "शेंगा भरणे",
+     "फली भरना"
+    ]
+   },
+   {
+    "canonical": "maturity",
+    "aliases": [
+     "पक्वता",
+     "परिपक्वता"
+    ]
+   },
+   {
+    "canonical": "harvest",
+    "aliases": [
+     "काढणी",
+     "तोडणी",
+     "कटाई",
+     "तुड़ाई"
+    ]
+   },
+   {
+    "canonical": "sowing",
+    "aliases": [
+     "पेरणी",
+     "बुवाई"
+    ]
+   },
+   {
+    "canonical": "germination",
+    "aliases": [
+     "उगवण",
+     "अंकुरण"
+    ]
+   },
+   {
+    "canonical": "veraison",
+    "aliases": [
+     "मणी मऊ होणे"
+    ]
+   },
+   {
+    "canonical": "grand growth",
+    "aliases": [
+     "जोमदार वाढ"
+    ]
+   }
+  ],
+  "weather": [
+   {
+    "canonical": "frost",
+    "aliases": [
+     "दंव",
+     "पाला",
+     "धुके",
+     "थंडी"
+    ]
+   },
+   {
+    "canonical": "cold wave",
+    "aliases": [
+     "थंडीची लाट",
+     "शीतलहर"
+    ]
+   },
+   {
+    "canonical": "heat wave",
+    "aliases": [
+     "उष्णतेची लाट",
+     "लू"
+    ]
+   },
+   {
+    "canonical": "rain",
+    "aliases": [
+     "पाऊस",
+     "बारिश",
+     "वर्षा"
+    ]
+   },
+   {
+    "canonical": "hailstorm",
+    "aliases": [
+     "गारपीट",
+     "ओलावृष्टि"
+    ]
+   },
+   {
+    "canonical": "temperature",
+    "aliases": [
+     "तापमान"
+    ]
+   },
+   {
+    "canonical": "wind",
+    "aliases": [
+     "वारा",
+     "हवा"
+    ]
+   },
+   {
+    "canonical": "waterlogging",
+    "aliases": [
+     "जलभराव",
+     "पाणी साचणे",
+     "पाणथळ"
+    ]
+   },
+   {
+    "canonical": "drought",
+    "aliases": [
+     "दुष्काळ",
+     "सूखा",
+     "पाण्याचा ताण"
+    ]
+   },
+   {
+    "canonical": "hail",
+    "aliases": [
+     "गारा"
+    ]
+   }
+  ],
+  "market": [
+   {
+    "canonical": "price",
+    "aliases": [
+     "भाव",
+     "दर",
+     "कीमत",
+     "bhav"
+    ]
+   },
+   {
+    "canonical": "mandi",
+    "aliases": [
+     "मंडी",
+     "बाजार समिती",
+     "बाजार",
+     "APMC"
+    ]
+   },
+   {
+    "canonical": "sell",
+    "aliases": [
+     "विकणे",
+     "विक्री",
+     "बेचना"
+    ]
+   },
+   {
+    "canonical": "arrivals",
+    "aliases": [
+     "आवक"
+    ]
+   }
+  ],
+  "transport": [
+   {
+    "canonical": "road",
+    "aliases": [
+     "रस्ता",
+     "मार्ग",
+     "सड़क",
+     "रास्ता"
+    ]
+   },
+   {
+    "canonical": "transport",
+    "aliases": [
+     "वाहतूक",
+     "परिवहन"
+    ]
+   },
+   {
+    "canonical": "truck",
+    "aliases": [
+     "ट्रक",
+     "गाडी"
+    ]
+   }
+  ],
+  "place": [
+   {
+    "canonical": "Maharashtra",
+    "aliases": [
+     "महाराष्ट्र"
+    ]
+   },
+   {
+    "canonical": "Nashik",
+    "aliases": [
+     "नाशिक",
+     "नासिक"
+    ]
+   },
+   {
+    "canonical": "Pune",
+    "aliases": [
+     "पुणे"
+    ]
+   },
+   {
+    "canonical": "Baramati",
+    "aliases": [
+     "बारामती"
+    ]
+   },
+   {
+    "canonical": "Saswad",
+    "aliases": [
+     "सासवड"
+    ]
+   },
+   {
+    "canonical": "Solapur",
+    "aliases": [
+     "सोलापूर"
+    ]
+   },
+   {
+    "canonical": "Sangola",
+    "aliases": [
+     "सांगोला"
+    ]
+   },
+   {
+    "canonical": "Ratnagiri",
+    "aliases": [
+     "रत्नागिरी"
+    ]
+   },
+   {
+    "canonical": "Devgad",
+    "aliases": [
+     "देवगड"
+    ]
+   },
+   {
+    "canonical": "Sindhudurg",
+    "aliases": [
+     "सिंधुदुर्ग"
+    ]
+   },
+   {
+    "canonical": "Nagpur",
+    "aliases": [
+     "नागपूर"
+    ]
+   },
+   {
+    "canonical": "Akola",
+    "aliases": [
+     "अकोला"
+    ]
+   },
+   {
+    "canonical": "Amravati",
+    "aliases": [
+     "अमरावती"
+    ]
+   },
+   {
+    "canonical": "Yavatmal",
+    "aliases": [
+     "यवतमाळ"
+    ]
+   },
+   {
+    "canonical": "Jalgaon",
+    "aliases": [
+     "जळगाव"
+    ]
+   },
+   {
+    "canonical": "Ahilyanagar",
+    "aliases": [
+     "अहिल्यानगर",
+     "Ahmednagar",
+     "अहमदनगर"
+    ]
+   },
+   {
+    "canonical": "Chhatrapati Sambhajinagar",
+    "aliases": [
+     "छत्रपती संभाजीनगर",
+     "Aurangabad",
+     "औरंगाबाद"
+    ]
+   },
+   {
+    "canonical": "Latur",
+    "aliases": [
+     "लातूर"
+    ]
+   },
+   {
+    "canonical": "Jalna",
+    "aliases": [
+     "जालना"
+    ]
+   },
+   {
+    "canonical": "Sangli",
+    "aliases": [
+     "सांगली"
+    ]
+   },
+   {
+    "canonical": "Satara",
+    "aliases": [
+     "सातारा"
+    ]
+   },
+   {
+    "canonical": "Kolhapur",
+    "aliases": [
+     "कोल्हापूर"
+    ]
+   },
+   {
+    "canonical": "Lasalgaon",
+    "aliases": [
+     "लासलगाव"
+    ]
+   },
+   {
+    "canonical": "Niphad",
+    "aliases": [
+     "निफाड"
+    ]
+   },
+   {
+    "canonical": "Hingoli",
+    "aliases": [
+     "हिंगोली"
+    ]
+   },
+   {
+    "canonical": "Beed",
+    "aliases": [
+     "बीड"
+    ]
+   },
+   {
+    "canonical": "Dharashiv",
+    "aliases": [
+     "धाराशिव",
+     "Osmanabad",
+     "उस्मानाबाद"
+    ]
+   }
+  ],
+  "filler": [
+   {
+    "canonical": "um",
+    "aliases": [
+     "अं",
+     "उम्",
+     "umm"
+    ]
+   },
+   {
+    "canonical": "uh",
+    "aliases": [
+     "आ",
+     "अह"
+    ]
+   },
+   {
+    "canonical": "like",
+    "aliases": []
+   },
+   {
+    "canonical": "so",
+    "aliases": [
+     "मग",
+     "तो"
+    ]
+   },
+   {
+    "canonical": "ok",
+    "aliases": [
+     "ठीक",
+     "अच्छा",
+     "बरं"
+    ]
+   },
+   {
+    "canonical": "means",
+    "aliases": [
+     "म्हणजे",
+     "मतलब"
+    ]
+   },
+   {
+    "canonical": "see",
+    "aliases": [
+     "बघा",
+     "देखिए"
+    ]
+   },
+   {
+    "canonical": "hey",
+    "aliases": [
+     "अहो",
+     "अरे"
+    ]
+   },
+   {
+    "canonical": "na",
+    "aliases": [
+     "ना"
+    ]
+   },
+   {
+    "canonical": "hmm",
+    "aliases": [
+     "हं",
+     "हम्म"
+    ]
+   }
+  ]
+ },
+ "number_words": {
+  "mr": [
+   "शून्य",
+   "एक",
+   "दोन",
+   "तीन",
+   "चार",
+   "पाच",
+   "सहा",
+   "सात",
+   "आठ",
+   "नऊ",
+   "दहा",
+   "वीस",
+   "पन्नास",
+   "शंभर",
+   "हजार",
+   "अर्धा",
+   "दीड",
+   "अडीच"
+  ],
+  "hi": [
+   "शून्य",
+   "एक",
+   "दो",
+   "तीन",
+   "चार",
+   "पांच",
+   "छह",
+   "सात",
+   "आठ",
+   "नौ",
+   "दस",
+   "बीस",
+   "पचास",
+   "सौ",
+   "हज़ार",
+   "आधा",
+   "डेढ़",
+   "ढाई"
+  ],
+  "en": [
+   "zero",
+   "one",
+   "two",
+   "three",
+   "four",
+   "five",
+   "six",
+   "seven",
+   "eight",
+   "nine",
+   "ten",
+   "twenty",
+   "fifty",
+   "hundred",
+   "thousand",
+   "half"
+  ]
+ },
+ "units": [
+  "ml",
+  "मिली",
+  "ग्रॅम",
+  "gram",
+  "g",
+  "kg",
+  "किलो",
+  "लिटर",
+  "litre",
+  "liter",
+  "ppm",
+  "%",
+  "टक्के",
+  "प्रतिशत",
+  "°C",
+  "डिग्री",
+  "mm",
+  "मिमी",
+  "qtl",
+  "क्विंटल",
+  "acre",
+  "एकर",
+  "hectare",
+  "हेक्टर",
+  "गुंठा"
+ ]
+}

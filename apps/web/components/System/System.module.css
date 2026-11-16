@@ -1,0 +1,17 @@
+.system { display: grid; justify-items: center; gap: var(--sp-4); padding-top: var(--sp-7); text-align: center; }
+.icon { color: var(--color-text-secondary); }
+.title { font-size: var(--fs-title); }
+.title:focus { outline: none; }
+@media (min-width: 1024px) { .title { font-size: var(--fs-display); } }
+.body { color: var(--color-text-secondary); }
+.actions { display: grid; gap: var(--sp-3); width: 100%; }
+.code { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--sp-2); font-size: var(--fs-small); color: var(--color-text-secondary); font-family: ui-monospace, monospace; user-select: all; }
+.list { list-style: none; display: grid; gap: var(--sp-2); text-align: start; width: 100%; }
+.listItem { display: flex; gap: var(--sp-2); align-items: flex-start; }
+.listItem svg { flex: none; margin-top: 0.2em; }
+.ok { color: var(--color-success-ink); }
+.no { color: var(--color-text-secondary); }
+.section { display: grid; gap: var(--sp-3); width: 100%; text-align: start; }
+.h2 { font-size: var(--fs-heading); }
+.contact { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-2); min-height: 56px; padding: var(--sp-2) var(--sp-3); border-radius: var(--r-md); background: var(--color-bg-surface); border: var(--bw-hairline) solid var(--color-border-subtle); }
+.cards { list-style: none; display: grid; gap: var(--sp-3); width: 100%; }

@@ -1,0 +1,6 @@
+.settings { display: grid; gap: var(--sp-1); }
+.offline { padding: var(--sp-3); border-radius: var(--r-sm); background: var(--color-info-tint); }
+.times { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); padding-bottom: var(--sp-2); }
+.time { display: grid; gap: var(--sp-1); }
+.timeLabel { font-size: var(--fs-small); font-weight: 600; }
+.timeInput { min-height: var(--tap-min); padding: 0 var(--sp-3); border-radius: var(--r-sm); border: var(--bw-control) solid var(--color-border-strong); background: var(--color-bg-surface); font-size: var(--fs-body); font-variant-numeric: tabular-nums; }

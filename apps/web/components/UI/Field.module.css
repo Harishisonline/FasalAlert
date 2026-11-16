@@ -1,0 +1,27 @@
+.field { display: grid; gap: var(--sp-1); min-width: 0; }
+.label { font-size: var(--fs-small); font-weight: 600; color: var(--color-text-primary); }
+.control {
+  position: relative; display: flex; align-items: center;
+  min-height: var(--tap-comfort); border: var(--bw-control) solid var(--color-border-strong);
+  border-radius: var(--r-sm); background: var(--color-bg-surface);
+}
+.control[data-size='md'] { min-height: var(--tap-min); }
+.control:focus-within { border: var(--bw-strong) solid var(--color-focus-ring); }
+.control[data-invalid] { border: var(--bw-strong) solid var(--color-danger-fill); }
+.input {
+  flex: 1; min-width: 0; min-height: inherit; border: none; background: transparent;
+  padding: 0 var(--sp-4); font-size: var(--fs-body); border-radius: inherit;
+  font-variant-numeric: tabular-nums;
+}
+.input:focus { outline: none; }
+.input:read-only:not(select) { background: var(--color-bg-sunken); }
+.input:disabled { color: var(--color-text-muted); cursor: not-allowed; background: var(--color-bg-sunken); }
+.control[data-select] .input { appearance: none; padding-right: calc(var(--sp-4) + 28px); cursor: pointer; }
+.chevron { position: absolute; right: var(--sp-3); pointer-events: none; color: var(--color-text-secondary); }
+.suffix { padding-right: var(--sp-4); color: var(--color-text-secondary); font-size: var(--fs-body); }
+.help { font-size: var(--fs-small); color: var(--color-text-muted); }
+.error { display: flex; gap: var(--sp-1); align-items: flex-start; font-size: var(--fs-small); color: var(--color-danger-ink); }
+.error svg { flex: none; margin-top: 0.2em; }
+/* A select is as wide as its longest option unless told otherwise: never wider than its column (UX_QA_AUDIT RESP-02). */
+.control { min-width: 0; max-width: 100%; }
+.control[data-select] .input { width: 100%; min-width: 0; text-overflow: ellipsis; }

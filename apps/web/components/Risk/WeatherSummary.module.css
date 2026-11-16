@@ -1,0 +1,20 @@
+.wrap { container-type: inline-size; display: grid; gap: var(--sp-2); }
+/* Phones: each day keeps a readable width and the strip scrolls sideways inside its card (docs/UX_QA_AUDIT.md RESP-03). */
+.scroll { overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+.table { width: 100%; min-width: calc(var(--cols, 7) * 64px); table-layout: fixed; text-align: center; }
+.table td { white-space: nowrap; }
+.day { white-space: normal; overflow-wrap: anywhere; line-height: 1.3; }
+.table th, .table td { padding: var(--sp-1) 2px; }
+.day { font-size: var(--fs-small); font-weight: 600; color: var(--color-text-secondary); }
+.tmax { color: var(--wx-tmax); font-weight: 600; font-variant-numeric: tabular-nums; font-size: var(--fs-small); }
+.tmin { color: var(--wx-tmin); font-weight: 600; font-variant-numeric: tabular-nums; font-size: var(--fs-small); }
+.rain { font-size: var(--fs-small); color: var(--wx-rain); }
+.rain svg { display: inline; vertical-align: -3px; }
+.noRain { color: var(--color-text-muted); }
+.long { display: none; }
+@container (min-width: 480px) {
+  .short { display: none; }
+  .long { display: block; }
+  .tmax, .tmin { font-size: var(--fs-body); }
+}
+.unavailable { color: var(--color-text-secondary); }

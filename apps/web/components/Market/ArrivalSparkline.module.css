@@ -1,0 +1,11 @@
+.wrap { display: grid; gap: var(--sp-2); }
+.summary { font-variant-numeric: tabular-nums; }
+.chart { display: flex; gap: var(--sp-2); height: calc(var(--sparkline-h) + 1.6em); align-items: flex-end; }
+.scale { display: flex; flex-direction: column; justify-content: space-between; height: var(--sparkline-h); font-size: var(--fs-small); color: var(--color-text-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bars { flex: 1; display: grid; grid-template-columns: repeat(14, 1fr); gap: 2px; height: var(--sparkline-h); align-items: end; border-bottom: 1px solid var(--color-border-subtle); }
+.slot { position: relative; height: 100%; display: flex; align-items: flex-end; justify-content: center; }
+.bar { position: relative; width: 100%; background: var(--mk-arrivals); border-radius: var(--r-xs) var(--r-xs) 0 0; }
+.bar[data-today] { background: var(--mk-arrivals-today); }
+.valueLabel { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font-size: var(--fs-small); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.missing { width: 2px; height: 6px; background: var(--color-border-strong); }
+.none { color: var(--color-text-secondary); }

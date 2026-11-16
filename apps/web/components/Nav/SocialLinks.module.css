@@ -1,0 +1,2 @@
+.links { list-style: none; display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-4); }
+.link { display: inline-flex; align-items: center; gap: var(--sp-1); min-height: var(--tap-min); font-weight: 600; }

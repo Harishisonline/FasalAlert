@@ -1,0 +1,8 @@
+# Railway service: FasalAlert background worker (scheduler). Same image, different start command.
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "apps/api/Dockerfile"
+
+[deploy]
+startCommand = "uv run python -m app.workers.scheduler"
+restartPolicyType = "ALWAYS"

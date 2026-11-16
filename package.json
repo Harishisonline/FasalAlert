@@ -1,0 +1,12 @@
+{
+  "name": "fasalalert",
+  "private": true,
+  "packageManager": "pnpm@12.16.1",
+  "scripts": {
+    "dev:web": "pnpm --filter @fasalalert/web dev",
+    "build:web": "pnpm --filter @fasalalert/web build",
+    "test:web": "pnpm --filter @fasalalert/web test",
+    "check:messages": "node scripts/check-messages.mjs",
+    "check:emdash": "node scripts/check-emdash.mjs"
+  }
+}

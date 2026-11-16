@@ -1,0 +1,2 @@
+.toggle { min-height: var(--tap-min); padding: 0 var(--sp-2); border: none; background: none; color: var(--color-text-brand); font-weight: 600; }
+.toggle:hover { text-decoration: underline; }

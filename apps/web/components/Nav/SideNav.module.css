@@ -1,0 +1,57 @@
+.side { display: none; }
+@media (min-width: 1024px) {
+  .side {
+    position: sticky; top: 0; display: flex; flex-direction: column; gap: var(--sp-3);
+    width: var(--sidebar-w); height: 100dvh; padding: var(--sp-4) var(--sp-3); flex: none;
+    background: var(--color-bg-surface); border-right: var(--bw-hairline) solid var(--color-border-subtle); overflow-y: auto;
+    transition: width 160ms var(--ease-standard, ease);
+  }
+  .side[data-collapsed] { width: 76px; padding-inline: var(--sp-2); }
+}
+.top { display: flex; align-items: center; gap: var(--sp-1); margin-bottom: var(--sp-1); min-width: 0; }
+.brand { display: inline-flex; align-items: center; min-height: var(--tap-min); padding: 0 var(--sp-2); color: inherit; text-decoration: none; border-radius: var(--r-sm); flex: 1; min-width: 0; }
+.collapse {
+  width: var(--tap-min); height: var(--tap-min); border: none; border-radius: var(--r-full); flex: none;
+  background: transparent; color: var(--color-text-secondary); display: inline-flex; align-items: center; justify-content: center;
+}
+/* Collapsed rail is too narrow for mark + 48px toggle side by side: stack them. */
+.side[data-collapsed] .top {
+  flex-direction: column; align-items: center; gap: var(--sp-1); margin-bottom: var(--sp-3);
+}
+.side[data-collapsed] .brand {
+  flex: none; justify-content: center; align-items: center; padding: 0; width: auto; min-height: 40px;
+}
+.side[data-collapsed] .collapse {
+  width: 40px; height: 40px; margin: 0;
+}
+.collapse:hover { background: var(--color-bg-sunken); color: var(--color-text-primary); }
+.collapse:focus-visible { outline: var(--bw-strong) solid var(--color-focus-ring); outline-offset: 2px; }
+.nav { flex: 1; display: grid; align-content: start; gap: var(--sp-1); }
+.group { list-style: none; display: grid; gap: 2px; }
+.groupTitle { padding: var(--sp-4) var(--sp-3) var(--sp-1); font-size: var(--fs-small); font-weight: 600; color: var(--color-text-muted); }
+.side[data-collapsed] .groupTitle { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.item {
+  position: relative; display: flex; align-items: center; gap: var(--sp-3); min-height: var(--tap-min); padding: 0 var(--sp-3);
+  border-radius: var(--r-sm); color: var(--color-text-secondary); text-decoration: none; font-size: var(--fs-body); font-weight: 500;
+}
+.side[data-collapsed] .item { justify-content: center; padding: 0; gap: 0; }
+.item:hover { background: var(--color-bg-sunken); color: var(--color-text-primary); }
+.item[aria-current='page'] { background: var(--color-bg-brand-tint); color: var(--color-text-brand); font-weight: 600; }
+.item[aria-current='page']::before { content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 2px; background: var(--color-action-primary); }
+.label { flex: 1; min-width: 0; }
+.side[data-collapsed] .label { display: none; }
+.side[data-collapsed] .item :global([data-count]),
+.side[data-collapsed] .item > span:not(.label) { display: none; }
+.subList { list-style: none; display: grid; gap: 1px; margin: 2px 0 var(--sp-1) var(--sp-5); padding-left: var(--sp-2); border-left: var(--bw-hairline) solid var(--color-border-subtle); }
+.subItem {
+  display: flex; align-items: center; gap: var(--sp-2); min-height: 44px; padding: 0 var(--sp-2);
+  border-radius: var(--r-sm); color: var(--color-text-secondary); text-decoration: none; font-size: var(--fs-small);
+}
+.subItem:hover { background: var(--color-bg-sunken); color: var(--color-text-primary); }
+.subItem[aria-current='page'] { color: var(--color-text-brand); font-weight: 600; background: var(--color-bg-brand-tint); }
+/* Long field names: two lines, then an ellipsis; the full name is in the title attribute and on the page. */
+.subLabel { flex: 1; min-width: 0; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; line-height: 1.35; }
+.profile { border-top: var(--bw-hairline) solid var(--color-border-subtle); padding-top: var(--sp-2); }
+@media (prefers-reduced-motion: reduce) {
+  .side { transition: none; }
+}

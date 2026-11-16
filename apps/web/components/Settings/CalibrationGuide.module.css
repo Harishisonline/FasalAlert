@@ -1,0 +1,5 @@
+.guide { display: grid; gap: var(--sp-2); padding: var(--sp-4); border-radius: var(--r-md); background: var(--color-info-tint); }
+.title { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-body); }
+.list { display: grid; gap: var(--sp-3); padding-top: var(--sp-2); }
+.list dt { font-weight: 600; }
+.list dd { margin: 0; color: var(--color-text-secondary); }

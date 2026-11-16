@@ -1,0 +1,30 @@
+/* Full screen on phones, a large centred panel from 768px. The footer actions are always on screen. */
+.dialog {
+  margin: 0; padding: 0; border: none; width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh;
+  background: var(--color-bg-canvas); color: var(--color-text-primary);
+}
+.dialog::backdrop { background: var(--scrim); }
+.inner { display: flex; flex-direction: column; height: 100%; }
+.head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); min-height: var(--header-h); padding: env(safe-area-inset-top) var(--sp-3) 0 var(--sp-4); border-bottom: var(--bw-hairline) solid var(--color-border-subtle); }
+.title { font-size: var(--fs-heading); }
+.close { width: var(--tap-min); height: var(--tap-min); border: none; background: none; border-radius: var(--r-full); color: var(--color-text-secondary); display: inline-flex; align-items: center; justify-content: center; }
+.close:hover { background: var(--color-bg-sunken); }
+.body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: grid; align-content: start; gap: var(--sp-3); padding: var(--sp-4); }
+.searchBox { display: grid; gap: var(--sp-1); }
+.label { font-size: var(--fs-small); font-weight: 600; }
+.search { display: flex; align-items: center; gap: var(--sp-2); min-height: var(--tap-min); padding: 0 var(--sp-3); border-radius: var(--r-sm); border: var(--bw-control) solid var(--color-border-strong); background: var(--color-bg-surface); color: var(--color-text-secondary); }
+.search:focus-within { border: var(--bw-strong) solid var(--color-focus-ring); }
+.search input { flex: 1; min-width: 0; min-height: 44px; border: none; background: none; font: inherit; color: var(--color-text-primary); outline: none; }
+.status { min-height: 1.2em; font-size: var(--fs-small); color: var(--color-text-muted); }
+.hits { list-style: none; display: grid; gap: 2px; padding: var(--sp-1); border-radius: var(--r-md); background: var(--color-bg-surface); border: var(--bw-hairline) solid var(--color-border-subtle); }
+.hit { display: flex; align-items: flex-start; gap: var(--sp-2); width: 100%; min-height: 44px; padding: var(--sp-2); border: none; border-radius: var(--r-sm); background: none; text-align: start; color: var(--color-text-primary); }
+.hit:hover { background: var(--color-bg-sunken); }
+.hit svg { flex: none; margin-top: 2px; color: var(--color-text-brand); }
+.hitMeta { color: var(--color-text-secondary); font-size: var(--fs-small); }
+.help { font-size: var(--fs-small); color: var(--color-text-secondary); }
+.foot { display: flex; justify-content: flex-end; gap: var(--sp-2); padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + env(safe-area-inset-bottom)); border-top: var(--bw-hairline) solid var(--color-border-subtle); background: var(--color-bg-surface); }
+.foot > * { flex: 1 1 0; }
+@media (min-width: 768px) {
+  .dialog { width: min(920px, calc(100vw - 48px)); height: min(860px, calc(100dvh - 48px)); margin: auto; border-radius: var(--r-lg); box-shadow: var(--shadow-3); }
+  .foot > * { flex: 0 0 auto; }
+}

@@ -1,0 +1,6 @@
+packages:
+  - "apps/web"
+  - "packages/shared"
+allowBuilds:
+  '@swc/core': true
+  esbuild: true

@@ -1,0 +1,23 @@
+.field { display: grid; gap: var(--sp-1); }
+.label { font-size: var(--fs-small); font-weight: 600; }
+.row { display: flex; gap: var(--sp-2); align-items: center; }
+.btn {
+  flex: none; width: var(--tap-min); height: var(--tap-min); border-radius: var(--r-full);
+  border: var(--bw-control) solid var(--color-border-strong); background: var(--color-bg-surface); color: var(--color-text-primary);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.btn:disabled { color: var(--color-text-muted); background: var(--color-bg-sunken); border-color: transparent; cursor: not-allowed; }
+.control {
+  display: flex; align-items: center; min-height: var(--tap-min); max-width: 10rem; flex: 1;
+  border: var(--bw-control) solid var(--color-border-strong); border-radius: var(--r-sm); background: var(--color-bg-surface);
+}
+.control:focus-within { border: var(--bw-strong) solid var(--color-focus-ring); }
+.control[data-invalid] { border: var(--bw-strong) solid var(--color-danger-fill); }
+.input {
+  flex: 1; min-width: 0; border: none; background: none; padding: 0 var(--sp-3);
+  font-size: var(--fs-heading); font-variant-numeric: tabular-nums; text-align: end;
+  appearance: textfield; -moz-appearance: textfield;
+}
+.input::-webkit-outer-spin-button, .input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.input:focus { outline: none; }
+.unit { padding-right: var(--sp-3); color: var(--color-text-secondary); }

@@ -1,0 +1,41 @@
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+apps/api/data/cache/
+apps/api/data/raw_external/
+apps/api/data/dev_outbox/
+# Price models are retrained weekly from the database (worker job train_prices): not tracked.
+apps/api/data/artifacts/price/
+# The frost/heat artifact (data/artifacts/frost/<version>/) IS tracked on purpose: the API serves it, and rebuilding it
+# needs about 693 MB of IMD and Open-Meteo downloads (scripts/train_frost.py).
+!apps/api/data/artifacts/.gitkeep
+coverage/
+playwright-report/
+test-results/
+.DS_Store
+.playwright-results/
+playwright-report/
+
+# ---- Published tree: only README.md among Markdown files ----
+# Every other .md (internal design docs, model cards, generated SOURCE.md provenance files) stays on disk
+# but is not part of the public repository. The runbook and the limitations live inside README.md.
+*.md
+!/README.md
+
+# ---- Internal documents and generated reports (not used at runtime) ----
+docs/
+# Produced by scripts/eval_rag.py; regenerate with `uv run python scripts/eval_rag.py`.
+apps/api/data/rag_eval_results.json
+# Exists only to generate docs/model_cards/frost.md, which is not published.
+apps/api/scripts/frost_card.py

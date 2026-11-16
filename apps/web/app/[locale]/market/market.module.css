@@ -1,0 +1,7 @@
+.muted { color: var(--color-text-secondary); }
+.grid { display: grid; gap: var(--sp-5); }
+.priceCol, .routeCol { display: grid; gap: var(--sp-5); min-width: 0; align-content: start; }
+@media (min-width: 768px) and (max-width: 1023px) { .grid { grid-template-columns: 1fr; } }
+@media (min-width: 1024px) { .grid { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); align-items: start; } }
+.unavailable { display: grid; gap: var(--sp-2); padding: var(--sp-4); border-radius: var(--r-md); background: var(--color-bg-surface); border: var(--bw-hairline) solid var(--color-border-subtle); border-left: var(--bw-risk) solid var(--color-stale-border); }
+.unavailableTitle { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-body); }

@@ -1,0 +1,14 @@
+.count {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 5px;
+  border-radius: var(--r-full); background: var(--color-action-primary); color: var(--color-text-on-action);
+  font-size: var(--fs-small); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.verified { display: inline-flex; align-items: center; gap: var(--sp-1); color: var(--color-success-ink); font-size: var(--fs-small); font-weight: 600; }
+.sample {
+  display: inline-flex; align-items: center; padding: 2px var(--sp-2); border-radius: var(--r-xs);
+  font-size: var(--fs-small); font-weight: 600; color: var(--color-synthetic-ink);
+  background: repeating-linear-gradient(45deg, var(--color-synthetic-tint) 0 6px, var(--color-bg-surface) 6px 10px);
+  border: var(--bw-hairline) solid var(--color-border-strong);
+}
+.stage { display: inline-flex; align-items: center; padding: 2px var(--sp-3); border-radius: var(--r-full); background: var(--color-bg-warm-tint); color: var(--color-text-warm); font-size: var(--fs-small); font-weight: 600; }
+.today { display: inline-flex; align-items: center; gap: var(--sp-1); font-size: var(--fs-small); font-weight: 700; color: var(--color-text-primary); }

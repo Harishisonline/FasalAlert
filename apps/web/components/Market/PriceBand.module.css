@@ -1,0 +1,20 @@
+.panel, .row { display: grid; gap: var(--sp-3); min-width: 0; }
+.head { display: grid; gap: var(--sp-1); }
+.big { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-1) var(--sp-2); }
+.value { font-size: var(--fs-numeric-xl); font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums lining-nums; }
+.unit { font-size: var(--fs-body); color: var(--color-text-secondary); }
+.meta { font-size: var(--fs-small); color: var(--color-text-muted); }
+.row .value { font-size: var(--fs-title); }
+.stat { font-variant-numeric: tabular-nums; }
+.trend { font-weight: 600; }
+.note { color: var(--color-text-secondary); }
+.range { font-variant-numeric: tabular-nums; }
+.histNote:empty { display: none; }
+.histNote { font-size: var(--fs-small); color: var(--color-text-secondary); }
+.net { display: grid; gap: var(--sp-1); padding: var(--sp-3); border-radius: var(--r-sm); background: var(--color-bg-sunken); }
+.netTitle { display: flex; align-items: center; font-weight: 600; color: var(--color-text-secondary); }
+.netRow { font-variant-numeric: tabular-nums; font-size: var(--fs-body); }
+.netLabel { color: var(--color-text-secondary); font-size: var(--fs-small); }
+.netResult { font-weight: 700; }
+.baseline { font-size: var(--fs-small); color: var(--color-text-secondary); }
+.unavailable { color: var(--color-text-secondary); }

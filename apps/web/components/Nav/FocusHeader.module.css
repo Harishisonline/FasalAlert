@@ -1,0 +1,2 @@
+.bar { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); min-height: var(--header-h); padding: env(safe-area-inset-top) var(--sp-4) 0; border-bottom: var(--bw-hairline) solid var(--color-border-subtle); }
+.brand { display: inline-flex; align-items: center; min-height: var(--tap-min); color: inherit; text-decoration: none; }

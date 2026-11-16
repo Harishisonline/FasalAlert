@@ -1,0 +1,12 @@
+.empty { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--sp-3); }
+.empty[data-variant='page'] { flex-direction: column; align-items: center; text-align: center; gap: var(--sp-4); padding-top: var(--sp-7); }
+.icon { color: var(--color-text-secondary); }
+.positive { color: var(--color-success-ink); flex: none; }
+.text { display: grid; gap: var(--sp-1); flex: 1 1 14rem; }
+.title { font-size: var(--fs-heading); font-weight: 600; }
+.title:focus { outline: none; }
+.empty[data-variant='page'] .title { font-size: var(--fs-title); }
+.empty[data-variant='positive'] .title { font-size: var(--fs-body); font-weight: 600; }
+.body { color: var(--color-text-secondary); }
+.action { flex-basis: 100%; }
+.empty[data-variant='page'] .action { display: grid; gap: var(--sp-3); width: min(100%, var(--container-narrow)); }

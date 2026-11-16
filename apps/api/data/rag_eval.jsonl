@@ -1,0 +1,24 @@
+{"id":"q01","lang":"en","q":"How do I protect mango flowers from frost or cold nights?","crop":"mango","topics":["frost_protection"],"expect":"answer"}
+{"id":"q02","lang":"mr","q":"आंब्याच्या मोहोराचे थंडीपासून संरक्षण कसे करावे?","crop":"mango","topics":["frost_protection","growth_stage"],"expect":"answer"}
+{"id":"q03","lang":"en","q":"What irrigation schedule should grapes get after fruit pruning?","crop":"grape","topics":["irrigation"],"expect":"answer"}
+{"id":"q04","lang":"en","q":"How to manage downy mildew in grape vineyards during rain?","crop":"grape","topics":["pest_disease","rainfall_management"],"expect":"answer"}
+{"id":"q05","lang":"mr","q":"द्राक्ष बागेत थंडीमुळे मणी तडकू नयेत म्हणून काय करावे?","crop":"grape","topics":["frost_protection"],"expect":"answer"}
+{"id":"q06","lang":"en","q":"How should pomegranate bacterial blight be managed?","crop":"pomegranate","topics":["pest_disease"],"expect":"answer"}
+{"id":"q07","lang":"mr","q":"डाळिंबावरील तेलकट डाग रोगाचे नियंत्रण कसे करावे?","crop":"pomegranate","topics":["pest_disease"],"expect":"answer"}
+{"id":"q08","lang":"en","q":"When is pomegranate fruit ready for harvest and how should it be handled?","crop":"pomegranate","topics":["harvesting","storage"],"expect":"answer"}
+{"id":"q09","lang":"en","q":"How do I control pink bollworm in cotton?","crop":"cotton","topics":["pest_disease"],"expect":"answer"}
+{"id":"q10","lang":"mr","q":"कापसावरील गुलाबी बोंडअळीचे व्यवस्थापन कसे करावे?","crop":"cotton","topics":["pest_disease"],"expect":"answer"}
+{"id":"q11","lang":"en","q":"What should cotton farmers do during heavy rain and waterlogging?","crop":"cotton","topics":["rainfall_management"],"expect":"answer"}
+{"id":"q12","lang":"en","q":"What is the recommended sowing time and seed rate for soybean?","crop":"soybean","topics":["cultivation"],"expect":"answer"}
+{"id":"q13","lang":"hi","q":"सोयाबीन में जलभराव होने पर क्या करें?","crop":"soybean","topics":["rainfall_management"],"expect":"answer"}
+{"id":"q14","lang":"en","q":"How should sugarcane be irrigated during the grand growth stage?","crop":"sugarcane","topics":["irrigation","growth_stage"],"expect":"answer"}
+{"id":"q15","lang":"mr","q":"उसाला पाणी कसे द्यावे?","crop":"sugarcane","topics":["irrigation"],"expect":"answer"}
+{"id":"q16","lang":"en","q":"How do I protect crops during a heat wave?","crop":null,"topics":["heat_stress"],"expect":"answer"}
+{"id":"q17","lang":"mr","q":"उष्णतेच्या लाटेत पिकांची काळजी कशी घ्यावी?","crop":null,"topics":["heat_stress"],"expect":"answer"}
+{"id":"q18","lang":"en","q":"How should mango fruits be harvested and packed for transport?","crop":"mango","topics":["harvesting","transport","storage"],"expect":"answer"}
+{"id":"q19","lang":"en","q":"What fertiliser dose should grapes get at pruning?","crop":"grape","topics":["cultivation"],"expect":"answer"}
+{"id":"q20","lang":"hi","q":"कपास में सफेद मक्खी का नियंत्रण कैसे करें?","crop":"cotton","topics":["pest_disease"],"expect":"answer"}
+{"id":"q21","lang":"en","q":"Who won the cricket world cup?","crop":null,"topics":[],"expect":"abstain"}
+{"id":"q22","lang":"en","q":"What is the best mobile phone to buy this year?","crop":null,"topics":[],"expect":"abstain"}
+{"id":"q23","lang":"mr","q":"शेअर बाजारात कोणते शेअर घ्यावेत?","crop":null,"topics":[],"expect":"abstain"}
+{"id":"q24","lang":"en","q":"How do I treat a fever in my child?","crop":null,"topics":[],"expect":"abstain"}

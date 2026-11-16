@@ -1,0 +1,20 @@
+# Local development services. The API and web app run on the host (see README).
+services:
+  db:
+    build: ./infra/db
+    image: fasalalert-db:16
+    environment:
+      POSTGRES_USER: fasalalert
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-fasalalert_dev}
+      POSTGRES_DB: fasalalert
+    ports:
+      - "5433:5432"
+    volumes:
+      - fasalalert_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fasalalert -d fasalalert"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+volumes:
+  fasalalert_pg:

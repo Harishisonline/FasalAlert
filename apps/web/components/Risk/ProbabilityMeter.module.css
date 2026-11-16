@@ -1,0 +1,24 @@
+.meter { container-type: inline-size; display: grid; gap: var(--sp-2); }
+.head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-2); }
+.label { font-size: var(--fs-small); font-weight: 600; color: var(--color-text-secondary); }
+.pct { font-size: var(--fs-heading); font-weight: 700; font-variant-numeric: tabular-nums; }
+.trackWrap { position: relative; padding: 4px 0; }
+.track { position: relative; display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; }
+.cell { height: 12px; border-radius: var(--r-xs); background: var(--color-bg-sunken); outline: 1px solid var(--color-border-subtle); outline-offset: -1px; }
+/* Filled cells use the level ink tokens so they meet 3:1 (design.md 14.3, fix 9). */
+.meter[data-level='none'] .cell[data-filled] { background: var(--risk-none-ink); }
+.meter[data-level='low'] .cell[data-filled] { background: var(--risk-low-ink); }
+.meter[data-level='medium'] .cell[data-filled] { background: var(--risk-medium-ink); }
+.meter[data-level='high'] .cell[data-filled] { background: var(--risk-high-ink); }
+.meter[data-level='critical'] .cell[data-filled] { background: var(--risk-critical-ink); }
+.cell[data-filled] { outline-color: transparent; }
+.band { position: absolute; top: 0; bottom: 0; border-radius: var(--r-xs); background: var(--color-bg-brand-tint); }
+.meter[data-level='high'] .band, .meter[data-level='critical'] .band { background: var(--risk-high-tint); }
+.meter[data-level='medium'] .band { background: var(--risk-medium-tint); }
+.meter[data-level='low'] .band { background: var(--risk-low-tint); }
+.mark { position: absolute; top: -4px; width: 3px; height: 20px; margin-left: -1.5px; border-radius: 1px; background: var(--color-text-primary); }
+.scale { display: none; grid-template-columns: repeat(4, 1fr); font-size: var(--fs-small); color: var(--color-text-muted); }
+.scale span:nth-child(n + 2) { border-left: 1px solid var(--color-border-subtle); padding-left: var(--sp-1); }
+@container (min-width: 480px) { .scale { display: grid; } }
+.text { font-size: var(--fs-small); color: var(--color-text-secondary); }
+.unavailableTrack { height: 12px; border-radius: var(--r-xs); background: repeating-linear-gradient(45deg, var(--color-bg-sunken) 0 6px, var(--color-bg-surface) 6px 10px); }
