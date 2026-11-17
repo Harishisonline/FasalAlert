@@ -23,13 +23,21 @@ from app.models.tables import DecisionRow, Field, JobRun
 log = logging.getLogger("fasalalert.jobs")
 
 
-def run_job(job: str, run_key: str, fn: Callable[[Session], dict[str, Any]]) -> dict[str, Any] | None:
-    """Claim (job, run_key) atomically; skip if a successful run exists; record the outcome."""
+def run_job(job: str, run_key: str, fn: Callable[[Session], dict[str, Any]], retry_failed: bool = True) -> dict[str, Any] | None:
+    """Claim (job, run_key) atomically; skip if a successful run exists; record the outcome.
+
+    With retry_failed=False a failed slot is not claimed again: a refresh triggered by web traffic
+    must not retry a rate-limited upstream on every request (the scheduled worker still retries it).
+    """
     db = SessionLocal()
     try:
-        stmt = insert(JobRun).values(job=job, run_key=run_key, status="running").on_conflict_do_update(
-            index_elements=["job", "run_key"], set_={"status": "running", "attempts": JobRun.attempts + 1, "started_at": now_utc(), "error": None},
-            where=JobRun.status == "failed")
+        values = {"job": job, "run_key": run_key, "status": "running"}
+        if retry_failed:
+            stmt = insert(JobRun).values(**values).on_conflict_do_update(
+                index_elements=["job", "run_key"], set_={"status": "running", "attempts": JobRun.attempts + 1, "started_at": now_utc(), "error": None},
+                where=JobRun.status == "failed")
+        else:
+            stmt = insert(JobRun).values(**values).on_conflict_do_nothing(index_elements=["job", "run_key"])
         res = db.execute(stmt.returning(JobRun.id))
         claimed = res.scalar_one_or_none()
         db.commit()
@@ -134,7 +142,19 @@ JOBS: dict[str, tuple[Callable[[Session], dict[str, Any]], int]] = {
 }
 
 
-def run_named(name: str) -> dict[str, Any] | None:
+def run_named(name: str, retry_failed: bool = True) -> dict[str, Any] | None:
     fn, hours = JOBS[name]
     key = slot(hours) if hours else datetime.now(IST).strftime("%Y-%m-%dT%H:%M")
-    return run_job(name, key, fn)
+    return run_job(name, key, fn, retry_failed=retry_failed)
+
+
+def refresh_public_board() -> dict[str, Any] | None:
+    """Refresh the public board on web traffic.
+
+    At most one attempt per hour, and a failed hour is not retried inside that hour: a burst of
+    visitors must not become a burst of upstream weather calls, which are rate limited per IP. The
+    scheduled worker runs the same job on its own 3-hour slot and still retries a failed one.
+    """
+    fn, _ = JOBS["public_board"]
+    key = f"{datetime.now(IST):%Y-%m-%dT%H}h"   # hourly bucket, distinct from the worker's slot key
+    return run_job("public_board", key, fn, retry_failed=False)

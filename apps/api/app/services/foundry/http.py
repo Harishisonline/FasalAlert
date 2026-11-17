@@ -2,19 +2,21 @@
 from __future__ import annotations
 
 import logging
+import time
 from collections.abc import Iterator
 from contextlib import contextmanager
 from typing import Any
 
 import httpx
 from sqlalchemy.orm import Session
-from tenacity import retry, retry_if_exception, stop_after_attempt, wait_exponential
 
 from app.core.config import get_settings
 from app.core.timeutil import now_utc
 from app.models.tables import IngestRun
 
 log = logging.getLogger("fasalalert.foundry")
+
+RETRY_STATUS = (429, 500, 502, 503, 504)
 
 
 class UpstreamError(RuntimeError):
@@ -25,41 +27,72 @@ def _retryable(exc: BaseException) -> bool:
     if isinstance(exc, httpx.TransportError):
         return True
     if isinstance(exc, httpx.HTTPStatusError):
-        return exc.response.status_code in (429, 500, 502, 503, 504)
+        return exc.response.status_code in RETRY_STATUS
     return False
+
+
+def _wait_for(exc: BaseException, attempt: int) -> float:
+    """How long to wait before the next attempt.
+
+    Open-Meteo counts every location in a multi-point request against its per-minute quota, so a busy
+    shared IP (a serverless function) can be answered with 429. The Retry-After header is the
+    upstream's own instruction; the exponential fallback only applies when it is absent.
+    """
+    resp = getattr(exc, "response", None)
+    retry_after = resp.headers.get("Retry-After") if resp is not None else None
+    if retry_after:
+        try:
+            return min(float(retry_after), 30.0)
+        except ValueError:
+            pass
+    return min(2 ** attempt, 15)
 
 
 def client(timeout: float = 30.0) -> httpx.Client:
     return httpx.Client(timeout=timeout, headers={"User-Agent": get_settings().http_user_agent}, follow_redirects=True)
 
 
-@retry(retry=retry_if_exception(_retryable), stop=stop_after_attempt(4), wait=wait_exponential(multiplier=1, max=20), reraise=True)
-def _get(url: str, params: dict[str, Any] | None, timeout: float) -> httpx.Response:
-    with client(timeout) as c:
-        r = c.get(url, params=params)
-        r.raise_for_status()
-        return r
+def _request(method: str, url: str, params: dict[str, Any] | None, timeout: float, attempts: int,
+             wait_budget: float, data: Any = None) -> httpx.Response:
+    """One HTTP call with retries, bounded by a total wait budget.
+
+    The budget matters on serverless: a request that sleeps past the function timeout is charged but
+    produces nothing. Causal, degradable calls pass attempts=1 and wait_budget=0 to fail fast.
+    """
+    deadline = time.monotonic() + max(wait_budget, 0.0)
+    last: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            with client(timeout) as c:
+                r = c.request(method, url, params=params, data=data)
+                r.raise_for_status()
+                return r
+        except httpx.HTTPError as e:
+            last = e
+            if not _retryable(e) or attempt == attempts:
+                raise
+            wait = _wait_for(e, attempt)
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise
+            log.warning("%s %s failed (%s), retrying in %.1fs", method, url, type(e).__name__, min(wait, remaining))
+            time.sleep(min(wait, remaining))
+    raise last if last else UpstreamError(f"{url} failed")
 
 
-def get_json(url: str, params: dict[str, Any] | None = None, timeout: float = 30.0) -> Any:
+def get_json(url: str, params: dict[str, Any] | None = None, timeout: float = 30.0,
+             attempts: int = 4, wait_budget: float = 20.0) -> Any:
     try:
-        return _get(url, params, timeout).json()
+        return _request("GET", url, params, timeout, attempts, wait_budget).json()
     except (httpx.HTTPError, ValueError) as e:
         status = getattr(getattr(e, "response", None), "status_code", None)
         raise UpstreamError(f"{url} failed ({status or type(e).__name__})") from e
 
 
-@retry(retry=retry_if_exception(_retryable), stop=stop_after_attempt(3), wait=wait_exponential(multiplier=2, max=30), reraise=True)
-def _post(url: str, data: Any, timeout: float) -> httpx.Response:
-    with client(timeout) as c:
-        r = c.post(url, data=data)
-        r.raise_for_status()
-        return r
-
-
-def post_form(url: str, data: Any, timeout: float = 60.0) -> Any:
+def post_form(url: str, data: Any, timeout: float = 60.0, attempts: int = 3,
+              wait_budget: float = 15.0) -> Any:
     try:
-        return _post(url, data, timeout).json()
+        return _request("POST", url, None, timeout, attempts, wait_budget, data=data).json()
     except (httpx.HTTPError, ValueError) as e:
         status = getattr(getattr(e, "response", None), "status_code", None)
         raise UpstreamError(f"{url} failed ({status or type(e).__name__})") from e

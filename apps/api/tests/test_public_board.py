@@ -4,10 +4,13 @@ from datetime import datetime, timedelta
 import pytest
 from geoalchemy2.shape import from_shape
 from shapely.geometry import Point
+from sqlalchemy import update
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from app.core.timeutil import IST, now_ist
-from app.models.tables import District
+from app.models.tables import District, PublicDistrictRisk
 from app.services.decision import public_board as pb
+from app.services.foundry.http import UpstreamError
 from app.services.models import phenology
 from app.services.models.frost_interface import FrostPrediction
 
@@ -81,6 +84,50 @@ def test_board_feeds_jma_and_skips_past_event_hours(db, district, cotton_mid_sea
     assert heat[0].forecast_c in (35.0, 34.0, 36.0)     # JMA value, not best_match
     cutoff = datetime.now(IST)
     assert all(datetime.combine(f.valid_date, datetime.min.time(), tzinfo=IST) + timedelta(hours=14) > cutoff for f in heat)
+
+
+def test_failed_refresh_keeps_the_last_good_board(db, district, cotton_mid_season, monkeypatch):
+    """Found in production on 2026-11-17: Open-Meteo answered 429 and every district became 'nodata',
+    which then replaced the good board while the API still reported stale=false."""
+    monkeypatch.setattr(pb, "_multi_forecast", lambda pts: [_forecast([33.0, 32.0, 31.0])])
+    _capture(monkeypatch, 31.7, 0.001)
+    pb.compute_board(db)
+    db.commit()
+    good, computed = pb.latest_board(db)
+    assert good and good[0]["level"] == "none"
+
+    # The upstream fails for the next refresh.
+    def _rate_limited(pts):
+        raise UpstreamError("https://api.open-meteo.com/v1/forecast failed (429)")
+    monkeypatch.setattr(pb, "_multi_forecast", _rate_limited)
+    with pytest.raises(UpstreamError):
+        pb.compute_board(db)
+    db.rollback()
+
+    # The good board is still the one served, and it is not presented as fresh.
+    rows, computed_after = pb.latest_board(db)
+    assert rows and rows[0]["level"] == "none"
+    assert computed_after == computed
+
+
+def test_all_nodata_board_is_not_served(db, district, cotton_mid_season, monkeypatch):
+    """A board where every district is 'nodata' carries no data and must not mask a good one."""
+    monkeypatch.setattr(pb, "_multi_forecast", lambda pts: [_forecast([33.0, 32.0, 31.0])])
+    _capture(monkeypatch, 31.7, 0.001)
+    pb.compute_board(db)
+    db.commit()
+
+    # The good board is yesterday's; a refresh that could not reach the upstream wrote only
+    # nodata rows for today.
+    yesterday = now_ist().date() - timedelta(days=1)
+    db.execute(update(PublicDistrictRisk).values(risk_date=yesterday))
+    db.execute(pg_insert(PublicDistrictRisk).values(
+        district_id=district.id, risk_date=now_ist().date(), payload={"code": district.code, "level": "nodata"},
+        model_version="frost"))
+    db.commit()
+
+    rows, computed = pb.latest_board(db)
+    assert rows and rows[0]["level"] == "none", "the nodata board must not replace the good one"
 
 
 def test_when_words_match_the_event_kind():

@@ -64,18 +64,23 @@ def _multi_forecast(points: list[tuple[float, float]]) -> list[dict[str, Any] | 
     s = get_settings()
     lat = ",".join(f"{p[0]:.3f}" for p in points)
     lon = ",".join(f"{p[1]:.3f}" for p in points)
+    # The deterministic forecast is required: without it there is no board at all, so it keeps the
+    # retry budget. The ensemble and JMA calls only add a spread band and the JMA input, and they
+    # degrade to None, so they fail fast rather than spending the function's time on a 429.
     det = get_json(s.open_meteo_forecast_url, {"latitude": lat, "longitude": lon, "timezone": "Asia/Kolkata", "forecast_days": 3,
                                                "daily": "temperature_2m_min,temperature_2m_max", "hourly": "temperature_2m"}, timeout=60)
     det = det if isinstance(det, list) else [det]
     try:
         ens = get_json(s.open_meteo_ensemble_url, {"latitude": lat, "longitude": lon, "timezone": "Asia/Kolkata", "forecast_days": 3,
-                                                   "daily": "temperature_2m_min,temperature_2m_max", "models": "ecmwf_ifs025"}, timeout=90)
+                                                   "daily": "temperature_2m_min,temperature_2m_max", "models": "ecmwf_ifs025"}, timeout=90,
+                       attempts=1, wait_budget=0)
         ens = ens if isinstance(ens, list) else [ens]
     except UpstreamError:
         ens = [None] * len(points)
     try:  # the classifier was trained on JMA forecasts (docs/model_cards/frost.md)
         jma = get_json(s.open_meteo_forecast_url, {"latitude": lat, "longitude": lon, "timezone": "Asia/Kolkata", "forecast_days": 3,
-                                                   "daily": "temperature_2m_min,temperature_2m_max", "models": "jma_seamless"}, timeout=60)
+                                                   "daily": "temperature_2m_min,temperature_2m_max", "models": "jma_seamless"}, timeout=60,
+                       attempts=1, wait_budget=0)
         jma = jma if isinstance(jma, list) else [jma]
     except UpstreamError:
         jma = [None] * len(points)
@@ -129,8 +134,11 @@ def compute_board(db: Session) -> list[dict[str, Any]]:
         try:
             fcs += _multi_forecast(pts[i:i + 40])
         except UpstreamError as e:
+            # A failed refresh must not replace the last good board with empty rows: the caller
+            # serves the previous board, labelled stale (PRD §7.1). Found in production on
+            # 2026-11-17, when Open-Meteo answered 429 and every district became 'nodata'.
             log.warning("district forecasts unavailable: %s", e)
-            fcs += [None] * len(pts[i:i + 40])
+            raise
     fetched = now_utc()
     rows = []
     for d, (lat, lon), fc in zip(districts, pts, fcs, strict=False):
@@ -215,14 +223,21 @@ def compute_board(db: Session) -> list[dict[str, Any]]:
 
 
 def latest_board(db: Session, day: date | None = None) -> tuple[list[dict[str, Any]], datetime | None]:
+    """The most recent board that carries data.
+
+    A board whose districts are all 'nodata' means the upstream weather fetch failed: it is skipped
+    so the previous good board is served instead (found in production on 2026-11-17).
+    """
     day = day or today_ist()
     rows = db.execute(select(PublicDistrictRisk).where(PublicDistrictRisk.risk_date <= day)
                       .order_by(PublicDistrictRisk.risk_date.desc(), PublicDistrictRisk.computed_at.desc())).scalars().all()
     if not rows:
         return [], None
-    latest_date = rows[0].risk_date
-    use = [r for r in rows if r.risk_date == latest_date]
-    return [r.payload for r in use], max(r.computed_at for r in use)
+    for latest_date in sorted({r.risk_date for r in rows}, reverse=True):
+        use = [r for r in rows if r.risk_date == latest_date]
+        if any(r.payload.get("level") != "nodata" for r in use):
+            return [r.payload for r in use], max(r.computed_at for r in use)
+    return [], None
 
 
 def is_stale(computed_at: datetime | None) -> bool:

@@ -19,10 +19,19 @@ export function sameOrigin(req: NextRequest): boolean {
   }
 }
 
+/** Upstream time budget per path.
+ *
+ * 'ask' runs the full RAG pipeline and 'public/risks' may recompute the district board when the
+ * stored one is stale, so both get a long budget. Everything else is a cheap lookup.
+ */
+export const UPSTREAM_TIMEOUT_MS: Record<string, number> = { ask: 45_000, 'public/risks': 45_000 };
+const DEFAULT_UPSTREAM_TIMEOUT_MS = 10_000;
+
 export async function upstream(path: string, init: { method: string; body?: string; token?: string; search?: string; contentType?: string; signal?: AbortSignal }): Promise<Response | null> {
   const headers: Record<string, string> = { accept: 'application/json' };
   if (init.body !== undefined) headers['content-type'] = init.contentType ?? 'application/json';
   if (init.token) headers.authorization = `Bearer ${init.token}`;
+  const budget = UPSTREAM_TIMEOUT_MS[path] ?? DEFAULT_UPSTREAM_TIMEOUT_MS;
   try {
     return await fetch(`${apiBaseUrl()}/${path}${init.search ?? ''}`, {
       method: init.method,
@@ -30,7 +39,7 @@ export async function upstream(path: string, init: { method: string; body?: stri
       body: init.body,
       cache: 'no-store',
       // The browser's own abort (Stop) ends the upstream request too, not only the time limit.
-      signal: init.signal ? AbortSignal.any([AbortSignal.timeout(path === 'ask' ? 45_000 : 10_000), init.signal]) : AbortSignal.timeout(path === 'ask' ? 45_000 : 10_000),
+      signal: init.signal ? AbortSignal.any([AbortSignal.timeout(budget), init.signal]) : AbortSignal.timeout(budget),
     });
   } catch {
     return null;

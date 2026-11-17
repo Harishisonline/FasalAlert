@@ -11,8 +11,8 @@ from app.core.db import get_db
 from app.core.errors import ApiError
 from app.core.timeutil import iso, today_ist
 from app.security.deps import public_rate_limit
-from app.services.decision.public_board import compute_board, is_stale, latest_board
-from app.services.foundry.http import UpstreamError
+from app.services.decision.public_board import is_stale, latest_board
+from app.workers.jobs import refresh_public_board
 
 router = APIRouter(dependencies=[Depends(public_rate_limit)])
 
@@ -28,13 +28,13 @@ def _board(db: Session, day: date | None) -> tuple[list[dict[str, Any]], Any, bo
     rows, computed = latest_board(db, day)
     stale = is_stale(computed)
     if (not rows or (stale and (day is None or day == today_ist()))):
-        try:
-            compute_board(db)
-            db.commit()
-            rows, computed = latest_board(db, day)
-            stale = is_stale(computed)
-        except UpstreamError:
-            stale = True  # serve the last computed board, labelled stale (PRD §7.1)
+        # The refresh goes through the job runner: one attempt per hour, so concurrent visitors do
+        # not each trigger a full recompute against the rate limited upstream weather API. A failed
+        # refresh writes nothing, so the last good board is served, labelled stale (PRD §7.1).
+        refresh_public_board()
+        db.expire_all()
+        rows, computed = latest_board(db, day)
+        stale = is_stale(computed)
     if not rows:
         raise ApiError("data_stale", "Live data unavailable", {"last_update": None})
     return rows, computed, stale

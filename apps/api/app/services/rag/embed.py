@@ -7,7 +7,6 @@ paraphrase-multilingual-MiniLM-L12-v2 in scripts/eval_rag.py; see docs/RAG_ARCHI
 from __future__ import annotations
 
 from functools import lru_cache
-from pathlib import Path
 
 import numpy as np
 
