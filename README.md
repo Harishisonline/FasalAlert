@@ -148,42 +148,68 @@ node scripts/check-messages.mjs && node scripts/check-emdash.mjs
 
 ## Deployment
 
-Three deployable pieces: the web app (Vercel), the API and the worker (two Railway services from one image), and
-PostgreSQL with PostGIS and pgvector (Railway Postgres or Neon).
+Three deployable pieces: the web app (a Vercel Next.js project), the API (a Vercel Python function at the
+repository root), and PostgreSQL with PostGIS and pgvector (Supabase, Neon, or any PostGIS-enabled Postgres).
 
 **1. Database**
 
-- **Neon:** create a project (PostgreSQL 16), then run `CREATE EXTENSION postgis; CREATE EXTENSION vector; CREATE EXTENSION pgcrypto; CREATE EXTENSION pg_trgm;`.
-- **Railway Postgres:** use a PostGIS-enabled template, or deploy `infra/db/Dockerfile` as a service with a volume.
+- **Supabase or Neon:** create a PostgreSQL 16 database, then run
+  `CREATE EXTENSION postgis; CREATE EXTENSION vector; CREATE EXTENSION pgcrypto; CREATE EXTENSION pg_trgm;`.
+- **Local container:** `docker compose up -d db` builds `infra/db/Dockerfile` (PostgreSQL 16 + PostGIS 3 + pgvector)
+  on port 5433.
 - Set `DATABASE_URL=postgresql+psycopg://USER:PASSWORD@HOST:PORT/DB?sslmode=require`.
+- Apply the schema and seed it (from `apps/api`):
+  `uv run alembic upgrade head && uv run python scripts/seed_locations.py && uv run python scripts/seed_crops.py && uv run python scripts/register_models.py && uv run python scripts/ingest_corpus.py`.
 
-**2. API and worker on Railway**
+**2. API on Vercel (Python function)**
 
-1. Create two services from this repository.
-2. Point service `api` at `railway.api.toml` and service `worker` at `railway.worker.toml` (config-as-code path).
-3. Set the same variables on both (see `.env.example`). Mandatory in production: `APP_ENV=production`, `DATABASE_URL`,
-   `JWT_SECRET` and `OTP_PEPPER` (32+ random characters each; the API refuses to start otherwise), `CORS_ORIGINS`
-   (your Vercel URL), an SMS provider (`SMS_PROVIDER=twilio` and the `TWILIO_*` values), `WEB_OTP_ORIGIN` (your web
-   domain, for SMS autofill), and optionally `VAPID_*`, `BHASHINI_*`, `IMD_API_KEY`, `DATA_GOV_IN_API_KEY`, `WHATSAPP_*`.
-4. The API container runs `alembic upgrade head` on start, then serves on `$PORT`. The health check is `/api/v1/health`.
-5. One-off seeds after the first deploy (Railway shell on the `api` service):
-   `uv run python scripts/seed_locations.py && uv run python scripts/seed_crops.py && uv run python scripts/register_models.py && uv run python scripts/ingest_corpus.py`.
-6. The worker runs the scheduler (`python -m app.workers.scheduler`). Run exactly one worker replica.
-
-Railway build note: the Dockerfile copies `apps/api` and `packages/shared`, so the build context must be the repository root.
+1. Import the repository and set the Root Directory to the repository root (leave it empty), Framework to FastAPI.
+2. The repository-root `vercel.json` builds the project: it runs `python apps/api/scripts/fetch_embedding_model.py`,
+   which downloads the int8 ONNX embedding model (~278 MB) into the function bundle. The model is fetched at build
+   time rather than committed, and the flat layout it writes keeps the bundle small.
+3. The `requirements.txt` at the repository root pins the serving dependencies. It is the request-path subset of
+   `apps/api/pyproject.toml`: no test, training or ingestion extras.
+4. Set these variables (see `.env.example` for the full list):
+   - `DATABASE_URL` (required)
+   - `JWT_SECRET`, `OTP_PEPPER` (32+ random characters each; the API refuses to start in production otherwise)
+   - `CORS_ORIGINS` (your web domain)
+   - `APP_ENV=production`, `SMS_PROVIDER=twilio` with the `TWILIO_*` values, `DEMO_OTP_VISIBLE=false`
+   - `WEB_OTP_ORIGIN` (your web domain, for SMS autofill)
+   - optionally `GROQ_API_KEY` (spoken Ask answers), `VAPID_*`, `BHASHINI_*`, `IMD_API_KEY`, `DATA_GOV_IN_API_KEY`
+5. `VERCEL_SUPPORT_LARGE_FUNCTIONS=1` is required: the bundle (dependencies + embedding model) is larger than the
+   standard Python limit.
+6. The health check is `/api/v1/health`. `api/index.py` mounts the FastAPI app (`apps/api/app/main.py`) on every path.
 
 **3. Web on Vercel**
 
 1. Import the repository and set the Root Directory to `apps/web` (pnpm workspace detected).
-2. Variables: `API_BASE_URL` (Railway API URL + `/api/v1`), `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_VAPID_PUBLIC_KEY`,
+2. `apps/web/vercel.json` keeps this project independent of the repository-root `vercel.json` used by the API.
+3. Variables: `API_BASE_URL` (API URL + `/api/v1`), `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_VAPID_PUBLIC_KEY`,
    and optionally `NEXT_PUBLIC_LINKEDIN_URL`, `NEXT_PUBLIC_X_URL`, `NEXT_PUBLIC_GITHUB_URL`.
-3. The service worker is served with `Cache-Control: no-cache, no-store, must-revalidate`.
+4. The service worker is served with `Cache-Control: no-cache, no-store, must-revalidate`.
 
-**4. After deploying**
+**4. Background jobs**
+
+The worker runs in its own process (`python -m app.workers.scheduler`), not inside a request. A Vercel function
+is per-request, so scheduled jobs are triggered with a cron that calls a job endpoint, or run by hand from a
+machine with the same environment:
+
+```
+uv run python -m app.workers.scheduler run public_board
+uv run python -m app.workers.scheduler run refresh_forecasts
+```
+
+Job names: `refresh_forecasts`, `public_board`, `recompute_decisions`, `dispatch_alerts`, `market_ingest`,
+`sync_registry`, `train_prices`. Every run is recorded in `job_runs` with an idempotency key, so re-running a job
+for the same slot does nothing.
+
+**5. After deploying**
 
 - `curl $API/api/v1/health` shows which integrations are configured and how fresh the data is.
-- Run the worker job once to fill the public board: `uv run python -m app.workers.scheduler run public_board`.
-- Model artifacts (`apps/api/data/artifacts/`) ship in the image; retrain with `scripts/train_frost.py` and `scripts/train_prices.py` and redeploy, or mount a volume.
+- Model artifacts (`apps/api/data/artifacts/`) ship with the function; retrain with `scripts/train_frost.py` and
+  `scripts/train_prices.py` and redeploy.
+- The advisory corpus (`apps/api/data/corpus/`) is committed, so the RAG index can be rebuilt without downloading
+  ~700 MB of source documents again.
 
 ## Limitations
 

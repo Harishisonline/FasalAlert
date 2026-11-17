@@ -15,6 +15,8 @@ __pycache__/
 apps/api/data/cache/
 apps/api/data/raw_external/
 apps/api/data/dev_outbox/
+# The embedding model is downloaded at build time by apps/api/scripts/fetch_embedding_model.py.
+apps/api/data/models/
 # Price models are retrained weekly from the database (worker job train_prices): not tracked.
 apps/api/data/artifacts/price/
 # The frost/heat artifact (data/artifacts/frost/<version>/) IS tracked on purpose: the API serves it, and rebuilding it

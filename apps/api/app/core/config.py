@@ -75,6 +75,10 @@ class Settings(BaseSettings):
 
     scheduler_enabled: bool = True
     http_user_agent: str = Field(default="FasalAlert/0.1 (research; contact via repository)")
+    # Database pool. A serverless function is per-request, so each instance opens its own pool:
+    # keep it small there or the database runs out of connections (see the deployment notes in README).
+    db_pool_size: int = 10
+    db_max_overflow: int = 20
 
     @property
     def is_production(self) -> bool:

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "python apps/api/scripts/fetch_embedding_model.py",
+  "functions": {
+    "api/index.py": { "maxDuration": 300 }
+  }
+}

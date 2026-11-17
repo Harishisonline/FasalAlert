@@ -1,0 +1,34 @@
+# Runtime dependencies of the FasalAlert API, as deployed on Vercel.
+# Only what the request path actually imports (see apps/api/app for the full
+# development set); the versions match apps/api/uv.lock.
+#
+# Serving stack
+fastapi==0.162.0
+pydantic==2.14.2
+pydantic-settings==2.16.0
+python-dotenv==1.2.4
+# Database
+sqlalchemy==2.1.6
+psycopg[binary]==3.3.6
+geoalchemy2==0.20.0
+pgvector==0.5.1
+shapely==2.2.0
+# HTTP and auth
+httpx==0.28.1
+tenacity==9.2.1
+pyjwt==2.15.1
+# Numbers: frost quantiles (scipy.special.ndtr) and the price/frost frames
+numpy==2.4.6
+pandas==3.1.0
+scipy==1.17.1
+joblib==1.6.0
+# The frost/heat artifact (apps/api/data/artifacts/frost/) stores a LightGBM model
+# inside a scikit-learn pipeline, so both are needed to unpickle it at request time.
+# Without them the artifact is skipped and frost risk degrades to the threshold rule.
+lightgbm==4.7.0
+scikit-learn==1.9.1
+threadpoolctl==3.7.0
+# Embeddings: the int8 ONNX mpnet model is fetched at build time by
+# apps/api/scripts/fetch_embedding_model.py, so only the runtime is needed here.
+fastembed==0.9.1
+onnxruntime==1.31.1

@@ -7,16 +7,24 @@ paraphrase-multilingual-MiniLM-L12-v2 in scripts/eval_rag.py; see docs/RAG_ARCHI
 from __future__ import annotations
 
 from functools import lru_cache
+from pathlib import Path
 
 import numpy as np
 
 from app.core.config import DATA_DIR, get_settings
+
+# The deployed build writes the int8 ONNX model as one flat directory (see
+# apps/api/scripts/fetch_embedding_model.py). Loading it from that path avoids the Hugging Face
+# cache layout, which stores every blob twice and made the function bundle several times larger.
+FLAT_MODEL_DIR = DATA_DIR / "models" / "mpnet-int8"
 
 
 @lru_cache(maxsize=2)
 def _model(name: str):  # type: ignore[no-untyped-def]
     from fastembed import TextEmbedding
 
+    if (FLAT_MODEL_DIR / "onnx" / "model.onnx").exists():
+        return TextEmbedding(model_name=name, specific_model_path=str(FLAT_MODEL_DIR))
     return TextEmbedding(model_name=name, cache_dir=str(DATA_DIR / "cache" / "fastembed"))
 
 
