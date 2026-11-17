@@ -130,6 +130,28 @@ def test_all_nodata_board_is_not_served(db, district, cotton_mid_season, monkeyp
     assert rows and rows[0]["level"] == "none", "the nodata board must not replace the good one"
 
 
+def test_forecast_is_fetched_in_small_batches(monkeypatch):
+    """Open-Meteo counts every location against its per-minute quota and a serverless egress IP is
+    shared, so one 36-location request from Vercel is answered with 429 (production, 2026-11-17)."""
+    calls = []
+
+    def fake_get_json(url, params=None, timeout=30.0, attempts=4, wait_budget=20.0):
+        assert params is not None
+        n = len(str(params["latitude"]).split(","))
+        calls.append(n)
+        return [{"daily": {"time": ["2026-11-17"], "temperature_2m_min": [10.0], "temperature_2m_max": [20.0]},
+                 "hourly": {"time": ["2026-11-17T05:00:00"], "temperature_2m": [10.0]}, "elevation": 300.0}] * n
+
+    monkeypatch.setattr(pb, "get_json", fake_get_json)
+    monkeypatch.setattr(pb.time, "sleep", lambda s: None)
+    pts = [(19.0 + i * 0.1, 75.0 + i * 0.1) for i in range(36)]
+    rows = pb._multi_forecast(pts)
+
+    assert len(rows) == 36
+    assert max(calls) <= pb.BATCH_SIZE, f"a request carried {max(calls)} locations, above {pb.BATCH_SIZE}"
+    assert len(calls) == 3 * 5, "one deterministic, one ensemble and one JMA call per batch"
+
+
 def test_when_words_match_the_event_kind():
     today_14 = datetime.combine(now_ist().date(), datetime.min.time(), tzinfo=IST) + timedelta(hours=14)
     tomorrow_05 = datetime.combine(now_ist().date() + timedelta(days=1), datetime.min.time(), tzinfo=IST) + timedelta(hours=5)

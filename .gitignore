@@ -41,3 +41,4 @@ docs/
 apps/api/data/rag_eval_results.json
 # Exists only to generate docs/model_cards/frost.md, which is not published.
 apps/api/scripts/frost_card.py
+.vercel

@@ -5,6 +5,7 @@ A district with no forecast is 'nodata' and excluded from the ranking.
 from __future__ import annotations
 
 import logging
+import time
 from datetime import date, datetime, timedelta
 from typing import Any
 
@@ -25,6 +26,11 @@ from app.services.models.frost_interface import FrostFeatures
 
 log = logging.getLogger("fasalalert.public")
 DISTRICT_NAME_MR = "name_mr"
+
+# Open-Meteo counts every location in a request against its per-minute quota. A serverless egress
+# IP is shared, so the board is fetched in small batches with a pause between them.
+BATCH_SIZE = 8
+BATCH_PAUSE_S = 1.5
 
 
 def _season_start(info: dict[str, Any], today: date) -> date | None:
@@ -61,29 +67,43 @@ def crop_stages_for_point(db: Session, lat: float, lon: float, today: date) -> d
 
 
 def _multi_forecast(points: list[tuple[float, float]]) -> list[dict[str, Any] | None]:
+    """Forecast for every district, in small batches.
+
+    Open-Meteo counts every location in a request against its per-minute quota, and a serverless
+    function's egress IP is shared with every other tenant on it. One 36-location request from
+    Vercel is answered with 429, while small batches from the same IP succeed (found in production
+    on 2026-11-17), so the board is fetched in batches with a pause between them.
+    """
     s = get_settings()
-    lat = ",".join(f"{p[0]:.3f}" for p in points)
-    lon = ",".join(f"{p[1]:.3f}" for p in points)
-    # The deterministic forecast is required: without it there is no board at all, so it keeps the
-    # retry budget. The ensemble and JMA calls only add a spread band and the JMA input, and they
-    # degrade to None, so they fail fast rather than spending the function's time on a 429.
-    det = get_json(s.open_meteo_forecast_url, {"latitude": lat, "longitude": lon, "timezone": "Asia/Kolkata", "forecast_days": 3,
-                                               "daily": "temperature_2m_min,temperature_2m_max", "hourly": "temperature_2m"}, timeout=60)
-    det = det if isinstance(det, list) else [det]
-    try:
-        ens = get_json(s.open_meteo_ensemble_url, {"latitude": lat, "longitude": lon, "timezone": "Asia/Kolkata", "forecast_days": 3,
-                                                   "daily": "temperature_2m_min,temperature_2m_max", "models": "ecmwf_ifs025"}, timeout=90,
-                       attempts=1, wait_budget=0)
-        ens = ens if isinstance(ens, list) else [ens]
-    except UpstreamError:
-        ens = [None] * len(points)
-    try:  # the classifier was trained on JMA forecasts (docs/model_cards/frost.md)
-        jma = get_json(s.open_meteo_forecast_url, {"latitude": lat, "longitude": lon, "timezone": "Asia/Kolkata", "forecast_days": 3,
-                                                   "daily": "temperature_2m_min,temperature_2m_max", "models": "jma_seamless"}, timeout=60,
-                       attempts=1, wait_budget=0)
-        jma = jma if isinstance(jma, list) else [jma]
-    except UpstreamError:
-        jma = [None] * len(points)
+    det: list[Any] = []
+    ens: list[Any] = []
+    jma: list[Any] = []
+    for i in range(0, len(points), BATCH_SIZE):
+        chunk = points[i:i + BATCH_SIZE]
+        lat = ",".join(f"{p[0]:.3f}" for p in chunk)
+        lon = ",".join(f"{p[1]:.3f}" for p in chunk)
+        # The deterministic forecast is required: without it there is no board at all, so it keeps
+        # the retry budget. The ensemble and JMA calls only add a spread band and the JMA input,
+        # and they degrade to None, so they fail fast rather than spending the function's time.
+        d = get_json(s.open_meteo_forecast_url, {"latitude": lat, "longitude": lon, "timezone": "Asia/Kolkata", "forecast_days": 3,
+                                                 "daily": "temperature_2m_min,temperature_2m_max", "hourly": "temperature_2m"}, timeout=60)
+        det += d if isinstance(d, list) else [d]
+        try:
+            e = get_json(s.open_meteo_ensemble_url, {"latitude": lat, "longitude": lon, "timezone": "Asia/Kolkata", "forecast_days": 3,
+                                                     "daily": "temperature_2m_min,temperature_2m_max", "models": "ecmwf_ifs025"}, timeout=90,
+                         attempts=1, wait_budget=0)
+            ens += e if isinstance(e, list) else [e]
+        except UpstreamError:
+            ens += [None] * len(chunk)
+        try:  # the classifier was trained on JMA forecasts (docs/model_cards/frost.md)
+            j = get_json(s.open_meteo_forecast_url, {"latitude": lat, "longitude": lon, "timezone": "Asia/Kolkata", "forecast_days": 3,
+                                                     "daily": "temperature_2m_min,temperature_2m_max", "models": "jma_seamless"}, timeout=60,
+                         attempts=1, wait_budget=0)
+            jma += j if isinstance(j, list) else [j]
+        except UpstreamError:
+            jma += [None] * len(chunk)
+        if i + BATCH_SIZE < len(points):
+            time.sleep(BATCH_PAUSE_S)
     return [{"det": d, "ens": e, "jma": j, "elevation": d.get("elevation")} for d, e, j in zip(det, ens, jma, strict=False)]
 
 
@@ -130,15 +150,14 @@ def compute_board(db: Session) -> list[dict[str, Any]]:
         p = to_shape(d.centroid)
         pts.append((p.y, p.x))
     fcs: list[dict[str, Any] | None] = []
-    for i in range(0, len(pts), 40):
-        try:
-            fcs += _multi_forecast(pts[i:i + 40])
-        except UpstreamError as e:
-            # A failed refresh must not replace the last good board with empty rows: the caller
-            # serves the previous board, labelled stale (PRD §7.1). Found in production on
-            # 2026-11-17, when Open-Meteo answered 429 and every district became 'nodata'.
-            log.warning("district forecasts unavailable: %s", e)
-            raise
+    try:
+        fcs += _multi_forecast(pts)
+    except UpstreamError as e:
+        # A failed refresh must not replace the last good board with empty rows: the caller
+        # serves the previous board, labelled stale (PRD §7.1). Found in production on
+        # 2026-11-17, when Open-Meteo answered 429 and every district became 'nodata'.
+        log.warning("district forecasts unavailable: %s", e)
+        raise
     fetched = now_utc()
     rows = []
     for d, (lat, lon), fc in zip(districts, pts, fcs, strict=False):
