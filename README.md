@@ -203,6 +203,18 @@ Job names: `refresh_forecasts`, `public_board`, `recompute_decisions`, `dispatch
 `sync_registry`, `train_prices`. Every run is recorded in `job_runs` with an idempotency key, so re-running a job
 for the same slot does nothing.
 
+**The public board refreshes itself, and the weather API is cached.** Open-Meteo rate limits by IP address, and a
+serverless function's egress IP is shared with every other tenant on it, so a function-hosted refresh is often
+answered with 429. Two things make the board survive that:
+
+- The raw district forecast is stored in `district_forecast_cache` whenever a fetch succeeds. A refresh that cannot
+  reach the API rebuilds the board from that cache instead of failing, so the board stays live.
+- `GET /api/v1/public/risks` triggers a refresh at most once an hour, claimed through `job_runs`, so a burst of
+  visitors does not become a burst of upstream calls.
+
+To seed the cache from a machine that is not rate limited, run the job once by hand against the same database:
+`uv run python -m app.workers.scheduler run public_board`.
+
 **5. After deploying**
 
 - `curl $API/api/v1/health` shows which integrations are configured and how fresh the data is.
@@ -228,6 +240,12 @@ risk is raised for them. Spoilage factors are null, so the expected transport lo
 **Weather resolution.** Forecasts are gridded (Open-Meteo; the JMA forecast fed to the frost and heat classifier is about
 0.5°, the ECMWF ensemble 0.25°), and the classifier's target is the IMD 1° cell average. It cannot see a frost pocket,
 a valley bottom or a slope inside one farm. The UI says so.
+
+**The public board can be served from a cached forecast.** Open-Meteo rate limits by IP address, and a serverless
+function's egress IP is shared with every other tenant on it. When a refresh cannot reach the API, the board is rebuilt
+from the forecast cached by an earlier successful fetch (`district_forecast_cache`), so the numbers shown are real but
+may be a few hours older than the last successful fetch. The API reports this with `stale: true` and the board's own
+timestamp. It never shows invented values: with nothing cached, the last good board is served and labelled stale.
 
 **Frost and heat skill at the thresholds the crops actually use.** The classifier (`frost-2026.11`) has demonstrated
 skill over climatology at frost 10 °C and heat 38 to 42 °C (48 h, season-bootstrap 95% interval above zero). It was also
