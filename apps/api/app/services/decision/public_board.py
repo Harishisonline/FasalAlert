@@ -16,7 +16,7 @@ from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
 from app.core.timeutil import IST, iso, now_ist, now_utc, today_ist
-from app.models.tables import District, PublicDistrictRisk
+from app.models.tables import District, DistrictForecastCache, PublicDistrictRisk
 from app.services.decision import policy
 from app.services.decision.engine import CROP_NAMES, _predict
 from app.services.foundry.climate import daily_history
@@ -70,9 +70,9 @@ def _multi_forecast(points: list[tuple[float, float]]) -> list[dict[str, Any] | 
     """Forecast for every district, in small batches.
 
     Open-Meteo counts every location in a request against its per-minute quota, and a serverless
-    function's egress IP is shared with every other tenant on it. One 36-location request from
-    Vercel is answered with 429, while small batches from the same IP succeed (found in production
-    on 2026-11-17), so the board is fetched in batches with a pause between them.
+    function's egress IP is shared with every other tenant on it: one 36-location request from
+    Vercel is answered with 429 (found in production on 2026-11-17). So the board is fetched in
+    small batches with a pause between them, and the caller stores what it got.
     """
     s = get_settings()
     det: list[Any] = []
@@ -105,6 +105,47 @@ def _multi_forecast(points: list[tuple[float, float]]) -> list[dict[str, Any] | 
         if i + BATCH_SIZE < len(points):
             time.sleep(BATCH_PAUSE_S)
     return [{"det": d, "ens": e, "jma": j, "elevation": d.get("elevation")} for d, e, j in zip(det, ens, jma, strict=False)]
+
+
+def _cache_forecasts(db: Session, districts: list[District], fcs: list[dict[str, Any] | None]) -> None:
+    """Store the raw forecast per district, so a later refresh can run without the weather API.
+
+    The whole multi-day block is stored under the day it was fetched, not per valid date: the board
+    reads the next three days at once (tonight's frost is the next morning's minimum), so a
+    per-day split would change the result. This is what keeps the board live on a serverless IP
+    that the weather API rate limits.
+    """
+    issued = now_utc()
+    for d, fc in zip(districts, fcs, strict=False):
+        if not fc or not fc.get("det"):
+            continue
+        stmt = insert(DistrictForecastCache).values(
+            district_id=d.id, valid_date=today_ist(), issued_at=issued,
+            payload={"det": fc["det"], "ens": fc.get("ens"), "jma": fc.get("jma"), "elevation": fc.get("elevation")},
+            source="open-meteo", source_url=get_settings().open_meteo_forecast_url, licence="CC BY 4.0 (Open-Meteo.com)")
+        stmt = stmt.on_conflict_do_update(index_elements=["district_id", "valid_date"],
+                                           set_={"payload": stmt.excluded.payload, "issued_at": issued,
+                                                 "source_url": stmt.excluded.source_url})
+        db.execute(stmt)
+    db.flush()
+
+
+def _cached_forecasts(db: Session, districts: list[District], day: date) -> list[dict[str, Any] | None]:
+    """The stored forecast for each district, or None where nothing is cached."""
+    rows = db.execute(select(DistrictForecastCache)
+                      .where(DistrictForecastCache.valid_date <= day)
+                      .order_by(DistrictForecastCache.valid_date.desc())).scalars().all()
+    by_district: dict[int, dict[str, Any]] = {}
+    for r in rows:                      # newest row per district wins
+        by_district.setdefault(r.district_id, r.payload)
+    out: list[dict[str, Any] | None] = []
+    for d in districts:
+        p = by_district.get(d.id)
+        if not p or not p.get("det"):
+            out.append(None)
+            continue
+        out.append({"det": p["det"], "ens": p.get("ens"), "jma": p.get("jma"), "elevation": p.get("elevation")})
+    return out
 
 
 def _jma_value(fc: dict[str, Any], var: str, day: str) -> float | None:
@@ -152,12 +193,18 @@ def compute_board(db: Session) -> list[dict[str, Any]]:
     fcs: list[dict[str, Any] | None] = []
     try:
         fcs += _multi_forecast(pts)
+        _cache_forecasts(db, districts, fcs)
     except UpstreamError as e:
         # A failed refresh must not replace the last good board with empty rows: the caller
         # serves the previous board, labelled stale (PRD §7.1). Found in production on
         # 2026-11-17, when Open-Meteo answered 429 and every district became 'nodata'.
         log.warning("district forecasts unavailable: %s", e)
-        raise
+        # The weather API rate limits by IP and a serverless function's IP is shared, so the
+        # forecast cached by an earlier successful fetch is used instead.
+        fcs = _cached_forecasts(db, districts, today)
+        if not any(fcs):
+            raise
+        log.info("rebuilding the board from %d cached district forecasts", sum(1 for f in fcs if f))
     fetched = now_utc()
     rows = []
     for d, (lat, lon), fc in zip(districts, pts, fcs, strict=False):

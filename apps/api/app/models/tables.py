@@ -438,6 +438,21 @@ class PublicDistrictRisk(Base):
     computed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default="now()")
 
 
+class DistrictForecastCache(Base):
+    """The raw multi-point forecast per district, kept so the board can be recomputed when the
+    weather API is unreachable (it rate limits serverless egress IPs by IP address)."""
+    __tablename__ = "district_forecast_cache"
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    district_id: Mapped[int] = mapped_column(ForeignKey("districts.id", ondelete="CASCADE"))
+    valid_date: Mapped[date] = mapped_column(Date)
+    issued_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    payload: Mapped[dict[str, Any]] = mapped_column(JSONB)
+    source: Mapped[str] = mapped_column(Text, default="open-meteo")
+    source_url: Mapped[str | None] = mapped_column(Text)
+    licence: Mapped[str | None] = mapped_column(Text)
+    fetched_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default="now()")
+
+
 class IngestRun(Base):
     __tablename__ = "ingest_runs"
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True)

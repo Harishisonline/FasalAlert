@@ -100,14 +100,26 @@ def test_failed_refresh_keeps_the_last_good_board(db, district, cotton_mid_seaso
     def _rate_limited(pts):
         raise UpstreamError("https://api.open-meteo.com/v1/forecast failed (429)")
     monkeypatch.setattr(pb, "_multi_forecast", _rate_limited)
+    pb.compute_board(db)
+    db.commit()
+
+    # The board is rebuilt from the cached forecast, so it keeps real values and is not empty.
+    rows, computed_after = pb.latest_board(db)
+    assert rows and rows[0]["level"] == "none"
+    assert rows[0]["tmin_c"] is not None, "the cached forecast must carry the forecast values"
+
+
+def test_failed_refresh_without_a_cache_raises(db, district, cotton_mid_season, monkeypatch):
+    """With nothing cached, a failed refresh must not write empty rows: the caller serves the last
+    good board instead."""
+    def _rate_limited(pts):
+        raise UpstreamError("https://api.open-meteo.com/v1/forecast failed (429)")
+    monkeypatch.setattr(pb, "_multi_forecast", _rate_limited)
     with pytest.raises(UpstreamError):
         pb.compute_board(db)
     db.rollback()
-
-    # The good board is still the one served, and it is not presented as fresh.
-    rows, computed_after = pb.latest_board(db)
-    assert rows and rows[0]["level"] == "none"
-    assert computed_after == computed
+    rows, _ = pb.latest_board(db)
+    assert rows == [], "nothing must be written when the upstream fails and there is no cache"
 
 
 def test_all_nodata_board_is_not_served(db, district, cotton_mid_season, monkeypatch):
